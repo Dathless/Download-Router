@@ -1,0 +1,27 @@
+:root {
+  color-scheme: light dark;
+  font-family: system-ui, sans-serif;
+}
+body {
+  margin: 0;
+  min-width: 280px;
+}
+main {
+  padding: 24px;
+  max-width: 640px;
+}
+h1 {
+  font-size: 1.4rem;
+}
+p {
+  line-height: 1.6;
+}
+button {
+  font: inherit;
+  padding: 8px 12px;
+  cursor: pointer;
+}
+button:focus-visible {
+  outline: 3px solid #3575df;
+  outline-offset: 3px;
+}

@@ -1,0 +1,10 @@
+node_modules/
+dist/
+coverage/
+.cache/
+.pnpm-store/
+.test-artifacts/
+pnpm-lock.yaml
+# Preserve the established manual layout of the planning documents.
+PLAN.md
+workingphase.md

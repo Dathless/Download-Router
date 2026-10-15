@@ -1,0 +1,787 @@
+{
+  "numTotalTestSuites": 10,
+  "numPassedTestSuites": 10,
+  "numFailedTestSuites": 0,
+  "numPendingTestSuites": 0,
+  "numTotalTests": 59,
+  "numPassedTests": 59,
+  "numFailedTests": 0,
+  "numPendingTests": 0,
+  "numTodoTests": 0,
+  "snapshot": {
+    "added": 0,
+    "failure": false,
+    "filesAdded": 0,
+    "filesRemoved": 0,
+    "filesRemovedList": [],
+    "filesUnmatched": 0,
+    "filesUpdated": 0,
+    "matched": 0,
+    "total": 0,
+    "unchecked": 0,
+    "uncheckedKeysByFile": [],
+    "unmatched": 0,
+    "updated": 0,
+    "didUpdate": false
+  },
+  "startTime": 1792053061230,
+  "success": true,
+  "testResults": [
+    {
+      "assertionResults": [
+        {
+          "ancestorTitles": ["TEST-DR-P0-02 stored sample configuration"],
+          "fullName": "TEST-DR-P0-02 stored sample configuration initializes only absent configuration, never overwrites stored values",
+          "status": "passed",
+          "title": "initializes only absent configuration, never overwrites stored values",
+          "duration": 3.47829999999999,
+          "failureMessages": [],
+          "meta": {},
+          "tags": [],
+          "benchmarks": []
+        },
+        {
+          "ancestorTitles": ["TEST-DR-P0-02 stored sample configuration"],
+          "fullName": "TEST-DR-P0-02 stored sample configuration skips unsupported or invalid individual rules without modifying the input",
+          "status": "passed",
+          "title": "skips unsupported or invalid individual rules without modifying the input",
+          "duration": 1.8246000000000038,
+          "failureMessages": [],
+          "meta": {},
+          "tags": [],
+          "benchmarks": []
+        },
+        {
+          "ancestorTitles": ["TEST-DR-P0-02 stored sample configuration"],
+          "fullName": "TEST-DR-P0-02 stored sample configuration uses priority then stored order across original and redirected domains",
+          "status": "passed",
+          "title": "uses priority then stored order across original and redirected domains",
+          "duration": 62.643700000000024,
+          "failureMessages": [],
+          "meta": {},
+          "tags": [],
+          "benchmarks": []
+        }
+      ],
+      "startTime": 1792053061487,
+      "endTime": 1792053061554.6438,
+      "status": "passed",
+      "message": "",
+      "name": "D:/LocalProject/ChromeExtension/DownloadRouter/tests/unit/config-repository.test.ts"
+    },
+    {
+      "assertionResults": [
+        {
+          "ancestorTitles": ["TEST-DR-P0-04 listener completion"],
+          "fullName": "TEST-DR-P0-04 listener completion returns true synchronously and suggests a relative path once",
+          "status": "passed",
+          "title": "returns true synchronously and suggests a relative path once",
+          "duration": 61.12110000000001,
+          "failureMessages": [],
+          "meta": {},
+          "tags": [],
+          "benchmarks": []
+        },
+        {
+          "ancestorTitles": ["TEST-DR-P0-04 listener completion"],
+          "fullName": "TEST-DR-P0-04 listener completion falls back without arguments: disabled",
+          "status": "passed",
+          "title": "falls back without arguments: disabled",
+          "duration": 61.24780000000004,
+          "failureMessages": [],
+          "meta": {},
+          "tags": [],
+          "benchmarks": []
+        },
+        {
+          "ancestorTitles": ["TEST-DR-P0-04 listener completion"],
+          "fullName": "TEST-DR-P0-04 listener completion falls back without arguments: no match",
+          "status": "passed",
+          "title": "falls back without arguments: no match",
+          "duration": 63.28789999999998,
+          "failureMessages": [],
+          "meta": {},
+          "tags": [],
+          "benchmarks": []
+        },
+        {
+          "ancestorTitles": ["TEST-DR-P0-04 listener completion"],
+          "fullName": "TEST-DR-P0-04 listener completion falls back without arguments: malformed URL",
+          "status": "passed",
+          "title": "falls back without arguments: malformed URL",
+          "duration": 62.696699999999964,
+          "failureMessages": [],
+          "meta": {},
+          "tags": [],
+          "benchmarks": []
+        },
+        {
+          "ancestorTitles": ["TEST-DR-P0-04 listener completion"],
+          "fullName": "TEST-DR-P0-04 listener completion falls back without arguments: bad envelope",
+          "status": "passed",
+          "title": "falls back without arguments: bad envelope",
+          "duration": 60.43519999999995,
+          "failureMessages": [],
+          "meta": {},
+          "tags": [],
+          "benchmarks": []
+        },
+        {
+          "ancestorTitles": ["TEST-DR-P0-04 listener completion"],
+          "fullName": "TEST-DR-P0-04 listener completion falls back without arguments: invalid rule",
+          "status": "passed",
+          "title": "falls back without arguments: invalid rule",
+          "duration": 61.891200000000026,
+          "failureMessages": [],
+          "meta": {},
+          "tags": [],
+          "benchmarks": []
+        },
+        {
+          "ancestorTitles": ["TEST-DR-P0-04 listener completion"],
+          "fullName": "TEST-DR-P0-04 listener completion falls back without arguments: invalid filename",
+          "status": "passed",
+          "title": "falls back without arguments: invalid filename",
+          "duration": 62.86670000000004,
+          "failureMessages": [],
+          "meta": {},
+          "tags": [],
+          "benchmarks": []
+        },
+        {
+          "ancestorTitles": ["TEST-DR-P0-04 listener completion"],
+          "fullName": "TEST-DR-P0-04 listener completion falls back without arguments: filtered rule",
+          "status": "passed",
+          "title": "falls back without arguments: filtered rule",
+          "duration": 61.69119999999998,
+          "failureMessages": [],
+          "meta": {},
+          "tags": [],
+          "benchmarks": []
+        },
+        {
+          "ancestorTitles": ["TEST-DR-P0-04 listener completion"],
+          "fullName": "TEST-DR-P0-04 listener completion handles async rejection or synchronous throw (sync=false) without logging private data",
+          "status": "passed",
+          "title": "handles async rejection or synchronous throw (sync=false) without logging private data",
+          "duration": 61.62869999999998,
+          "failureMessages": [],
+          "meta": {},
+          "tags": [],
+          "benchmarks": []
+        },
+        {
+          "ancestorTitles": ["TEST-DR-P0-04 listener completion"],
+          "fullName": "TEST-DR-P0-04 listener completion handles async rejection or synchronous throw (sync=true) without logging private data",
+          "status": "passed",
+          "title": "handles async rejection or synchronous throw (sync=true) without logging private data",
+          "duration": 61.51929999999993,
+          "failureMessages": [],
+          "meta": {},
+          "tags": [],
+          "benchmarks": []
+        },
+        {
+          "ancestorTitles": ["TEST-DR-P0-05 watchdog and late completion"],
+          "fullName": "TEST-DR-P0-05 watchdog and late completion falls back at 1000 ms and ignores late resolve",
+          "status": "passed",
+          "title": "falls back at 1000 ms and ignores late resolve",
+          "duration": 6.574500000000057,
+          "failureMessages": [],
+          "meta": {},
+          "tags": [],
+          "benchmarks": []
+        },
+        {
+          "ancestorTitles": ["TEST-DR-P0-05 watchdog and late completion"],
+          "fullName": "TEST-DR-P0-05 watchdog and late completion falls back at 1000 ms and ignores late reject",
+          "status": "passed",
+          "title": "falls back at 1000 ms and ignores late reject",
+          "duration": 1.1883000000000266,
+          "failureMessages": [],
+          "meta": {},
+          "tags": [],
+          "benchmarks": []
+        },
+        {
+          "ancestorTitles": ["TEST-DR-P0-05 watchdog and late completion"],
+          "fullName": "TEST-DR-P0-05 watchdog and late completion clears the watchdog when processing succeeds",
+          "status": "passed",
+          "title": "clears the watchdog when processing succeeds",
+          "duration": 1.26400000000001,
+          "failureMessages": [],
+          "meta": {},
+          "tags": [],
+          "benchmarks": []
+        }
+      ],
+      "startTime": 1792053061495,
+      "endTime": 1792053062123.264,
+      "status": "passed",
+      "message": "",
+      "name": "D:/LocalProject/ChromeExtension/DownloadRouter/tests/unit/download-handler.test.ts"
+    },
+    {
+      "assertionResults": [
+        {
+          "ancestorTitles": [],
+          "fullName": "TEST-DR-P0-02 fixture serves attachments and redirects without filesystem access",
+          "status": "passed",
+          "title": "TEST-DR-P0-02 fixture serves attachments and redirects without filesystem access",
+          "duration": 60.496999999999986,
+          "failureMessages": [],
+          "meta": {},
+          "tags": [],
+          "benchmarks": []
+        }
+      ],
+      "startTime": 1792053061482,
+      "endTime": 1792053061542.497,
+      "status": "passed",
+      "message": "",
+      "name": "D:/LocalProject/ChromeExtension/DownloadRouter/tests/unit/fixture-server.test.js"
+    },
+    {
+      "assertionResults": [
+        {
+          "ancestorTitles": [
+            "TEST-DR-P0-06 basename and complete relative paths"
+          ],
+          "fullName": "TEST-DR-P0-06 basename and complete relative paths keeps only the basename: C:\\Downloads\\Báo cáo.pdf",
+          "status": "passed",
+          "title": "keeps only the basename: C:\\Downloads\\Báo cáo.pdf",
+          "duration": 1.9376999999999782,
+          "failureMessages": [],
+          "meta": {},
+          "tags": [],
+          "benchmarks": []
+        },
+        {
+          "ancestorTitles": [
+            "TEST-DR-P0-06 basename and complete relative paths"
+          ],
+          "fullName": "TEST-DR-P0-06 basename and complete relative paths keeps only the basename: /home/test/Downloads/Báo cáo.pdf",
+          "status": "passed",
+          "title": "keeps only the basename: /home/test/Downloads/Báo cáo.pdf",
+          "duration": 0.22620000000000573,
+          "failureMessages": [],
+          "meta": {},
+          "tags": [],
+          "benchmarks": []
+        },
+        {
+          "ancestorTitles": [
+            "TEST-DR-P0-06 basename and complete relative paths"
+          ],
+          "fullName": "TEST-DR-P0-06 basename and complete relative paths keeps only the basename: Báo cáo.pdf",
+          "status": "passed",
+          "title": "keeps only the basename: Báo cáo.pdf",
+          "duration": 0.1343999999999994,
+          "failureMessages": [],
+          "meta": {},
+          "tags": [],
+          "benchmarks": []
+        },
+        {
+          "ancestorTitles": [
+            "TEST-DR-P0-06 basename and complete relative paths"
+          ],
+          "fullName": "TEST-DR-P0-06 basename and complete relative paths rejects an invalid basename: \"\"",
+          "status": "passed",
+          "title": "rejects an invalid basename: \"\"",
+          "duration": 0.2143000000000086,
+          "failureMessages": [],
+          "meta": {},
+          "tags": [],
+          "benchmarks": []
+        },
+        {
+          "ancestorTitles": [
+            "TEST-DR-P0-06 basename and complete relative paths"
+          ],
+          "fullName": "TEST-DR-P0-06 basename and complete relative paths rejects an invalid basename: \".\"",
+          "status": "passed",
+          "title": "rejects an invalid basename: \".\"",
+          "duration": 0.20539999999999736,
+          "failureMessages": [],
+          "meta": {},
+          "tags": [],
+          "benchmarks": []
+        },
+        {
+          "ancestorTitles": [
+            "TEST-DR-P0-06 basename and complete relative paths"
+          ],
+          "fullName": "TEST-DR-P0-06 basename and complete relative paths rejects an invalid basename: \"..\"",
+          "status": "passed",
+          "title": "rejects an invalid basename: \"..\"",
+          "duration": 0.11230000000000473,
+          "failureMessages": [],
+          "meta": {},
+          "tags": [],
+          "benchmarks": []
+        },
+        {
+          "ancestorTitles": [
+            "TEST-DR-P0-06 basename and complete relative paths"
+          ],
+          "fullName": "TEST-DR-P0-06 basename and complete relative paths rejects an invalid basename: \"CON\"",
+          "status": "passed",
+          "title": "rejects an invalid basename: \"CON\"",
+          "duration": 0.09919999999999618,
+          "failureMessages": [],
+          "meta": {},
+          "tags": [],
+          "benchmarks": []
+        },
+        {
+          "ancestorTitles": [
+            "TEST-DR-P0-06 basename and complete relative paths"
+          ],
+          "fullName": "TEST-DR-P0-06 basename and complete relative paths rejects an invalid basename: \"con.txt\"",
+          "status": "passed",
+          "title": "rejects an invalid basename: \"con.txt\"",
+          "duration": 0.0893000000000086,
+          "failureMessages": [],
+          "meta": {},
+          "tags": [],
+          "benchmarks": []
+        },
+        {
+          "ancestorTitles": [
+            "TEST-DR-P0-06 basename and complete relative paths"
+          ],
+          "fullName": "TEST-DR-P0-06 basename and complete relative paths rejects an invalid basename: \"LPT1.pdf\"",
+          "status": "passed",
+          "title": "rejects an invalid basename: \"LPT1.pdf\"",
+          "duration": 0.1203999999999894,
+          "failureMessages": [],
+          "meta": {},
+          "tags": [],
+          "benchmarks": []
+        },
+        {
+          "ancestorTitles": [
+            "TEST-DR-P0-06 basename and complete relative paths"
+          ],
+          "fullName": "TEST-DR-P0-06 basename and complete relative paths rejects an invalid basename: \"COM¹.txt\"",
+          "status": "passed",
+          "title": "rejects an invalid basename: \"COM¹.txt\"",
+          "duration": 0.15860000000000696,
+          "failureMessages": [],
+          "meta": {},
+          "tags": [],
+          "benchmarks": []
+        },
+        {
+          "ancestorTitles": [
+            "TEST-DR-P0-06 basename and complete relative paths"
+          ],
+          "fullName": "TEST-DR-P0-06 basename and complete relative paths rejects an invalid basename: \"name.\"",
+          "status": "passed",
+          "title": "rejects an invalid basename: \"name.\"",
+          "duration": 0.08740000000000236,
+          "failureMessages": [],
+          "meta": {},
+          "tags": [],
+          "benchmarks": []
+        },
+        {
+          "ancestorTitles": [
+            "TEST-DR-P0-06 basename and complete relative paths"
+          ],
+          "fullName": "TEST-DR-P0-06 basename and complete relative paths rejects an invalid basename: \"name \"",
+          "status": "passed",
+          "title": "rejects an invalid basename: \"name \"",
+          "duration": 0.06130000000001701,
+          "failureMessages": [],
+          "meta": {},
+          "tags": [],
+          "benchmarks": []
+        },
+        {
+          "ancestorTitles": [
+            "TEST-DR-P0-06 basename and complete relative paths"
+          ],
+          "fullName": "TEST-DR-P0-06 basename and complete relative paths rejects an invalid basename: \"bad:name\"",
+          "status": "passed",
+          "title": "rejects an invalid basename: \"bad:name\"",
+          "duration": 0.054600000000021964,
+          "failureMessages": [],
+          "meta": {},
+          "tags": [],
+          "benchmarks": []
+        },
+        {
+          "ancestorTitles": [
+            "TEST-DR-P0-06 basename and complete relative paths"
+          ],
+          "fullName": "TEST-DR-P0-06 basename and complete relative paths rejects an invalid basename: \"bad\\u0000name\"",
+          "status": "passed",
+          "title": "rejects an invalid basename: \"bad\\u0000name\"",
+          "duration": 0.05639999999999645,
+          "failureMessages": [],
+          "meta": {},
+          "tags": [],
+          "benchmarks": []
+        },
+        {
+          "ancestorTitles": [
+            "TEST-DR-P0-06 basename and complete relative paths"
+          ],
+          "fullName": "TEST-DR-P0-06 basename and complete relative paths rejects an invalid basename: \"folder/name\"",
+          "status": "passed",
+          "title": "rejects an invalid basename: \"folder/name\"",
+          "duration": 0.05389999999999873,
+          "failureMessages": [],
+          "meta": {},
+          "tags": [],
+          "benchmarks": []
+        },
+        {
+          "ancestorTitles": [
+            "TEST-DR-P0-06 basename and complete relative paths"
+          ],
+          "fullName": "TEST-DR-P0-06 basename and complete relative paths rejects an invalid basename: \"folder\\\\name\"",
+          "status": "passed",
+          "title": "rejects an invalid basename: \"folder\\\\name\"",
+          "duration": 0.054400000000015325,
+          "failureMessages": [],
+          "meta": {},
+          "tags": [],
+          "benchmarks": []
+        },
+        {
+          "ancestorTitles": [
+            "TEST-DR-P0-06 basename and complete relative paths"
+          ],
+          "fullName": "TEST-DR-P0-06 basename and complete relative paths rejects an unsafe destination: \"\"",
+          "status": "passed",
+          "title": "rejects an unsafe destination: \"\"",
+          "duration": 0.08699999999998909,
+          "failureMessages": [],
+          "meta": {},
+          "tags": [],
+          "benchmarks": []
+        },
+        {
+          "ancestorTitles": [
+            "TEST-DR-P0-06 basename and complete relative paths"
+          ],
+          "fullName": "TEST-DR-P0-06 basename and complete relative paths rejects an unsafe destination: \"../outside\"",
+          "status": "passed",
+          "title": "rejects an unsafe destination: \"../outside\"",
+          "duration": 0.0514999999999759,
+          "failureMessages": [],
+          "meta": {},
+          "tags": [],
+          "benchmarks": []
+        },
+        {
+          "ancestorTitles": [
+            "TEST-DR-P0-06 basename and complete relative paths"
+          ],
+          "fullName": "TEST-DR-P0-06 basename and complete relative paths rejects an unsafe destination: \"a/../outside\"",
+          "status": "passed",
+          "title": "rejects an unsafe destination: \"a/../outside\"",
+          "duration": 0.05129999999999768,
+          "failureMessages": [],
+          "meta": {},
+          "tags": [],
+          "benchmarks": []
+        },
+        {
+          "ancestorTitles": [
+            "TEST-DR-P0-06 basename and complete relative paths"
+          ],
+          "fullName": "TEST-DR-P0-06 basename and complete relative paths rejects an unsafe destination: \"a\\\\..\\\\outside\"",
+          "status": "passed",
+          "title": "rejects an unsafe destination: \"a\\\\..\\\\outside\"",
+          "duration": 0.043500000000022965,
+          "failureMessages": [],
+          "meta": {},
+          "tags": [],
+          "benchmarks": []
+        },
+        {
+          "ancestorTitles": [
+            "TEST-DR-P0-06 basename and complete relative paths"
+          ],
+          "fullName": "TEST-DR-P0-06 basename and complete relative paths rejects an unsafe destination: \"/root\"",
+          "status": "passed",
+          "title": "rejects an unsafe destination: \"/root\"",
+          "duration": 0.045099999999990814,
+          "failureMessages": [],
+          "meta": {},
+          "tags": [],
+          "benchmarks": []
+        },
+        {
+          "ancestorTitles": [
+            "TEST-DR-P0-06 basename and complete relative paths"
+          ],
+          "fullName": "TEST-DR-P0-06 basename and complete relative paths rejects an unsafe destination: \"\\\\root\"",
+          "status": "passed",
+          "title": "rejects an unsafe destination: \"\\\\root\"",
+          "duration": 0.10009999999999764,
+          "failureMessages": [],
+          "meta": {},
+          "tags": [],
+          "benchmarks": []
+        },
+        {
+          "ancestorTitles": [
+            "TEST-DR-P0-06 basename and complete relative paths"
+          ],
+          "fullName": "TEST-DR-P0-06 basename and complete relative paths rejects an unsafe destination: \"\\\\\\\\host\\\\share\"",
+          "status": "passed",
+          "title": "rejects an unsafe destination: \"\\\\\\\\host\\\\share\"",
+          "duration": 0.05150000000000432,
+          "failureMessages": [],
+          "meta": {},
+          "tags": [],
+          "benchmarks": []
+        },
+        {
+          "ancestorTitles": [
+            "TEST-DR-P0-06 basename and complete relative paths"
+          ],
+          "fullName": "TEST-DR-P0-06 basename and complete relative paths rejects an unsafe destination: \"C:\\\\data\"",
+          "status": "passed",
+          "title": "rejects an unsafe destination: \"C:\\\\data\"",
+          "duration": 0.057999999999992724,
+          "failureMessages": [],
+          "meta": {},
+          "tags": [],
+          "benchmarks": []
+        },
+        {
+          "ancestorTitles": [
+            "TEST-DR-P0-06 basename and complete relative paths"
+          ],
+          "fullName": "TEST-DR-P0-06 basename and complete relative paths rejects an unsafe destination: \"C:relative\"",
+          "status": "passed",
+          "title": "rejects an unsafe destination: \"C:relative\"",
+          "duration": 0.043500000000022965,
+          "failureMessages": [],
+          "meta": {},
+          "tags": [],
+          "benchmarks": []
+        },
+        {
+          "ancestorTitles": [
+            "TEST-DR-P0-06 basename and complete relative paths"
+          ],
+          "fullName": "TEST-DR-P0-06 basename and complete relative paths rejects an unsafe destination: \"~/data\"",
+          "status": "passed",
+          "title": "rejects an unsafe destination: \"~/data\"",
+          "duration": 0.05940000000001078,
+          "failureMessages": [],
+          "meta": {},
+          "tags": [],
+          "benchmarks": []
+        },
+        {
+          "ancestorTitles": [
+            "TEST-DR-P0-06 basename and complete relative paths"
+          ],
+          "fullName": "TEST-DR-P0-06 basename and complete relative paths rejects an unsafe destination: \"a//b\"",
+          "status": "passed",
+          "title": "rejects an unsafe destination: \"a//b\"",
+          "duration": 0.03710000000000946,
+          "failureMessages": [],
+          "meta": {},
+          "tags": [],
+          "benchmarks": []
+        },
+        {
+          "ancestorTitles": [
+            "TEST-DR-P0-06 basename and complete relative paths"
+          ],
+          "fullName": "TEST-DR-P0-06 basename and complete relative paths rejects an unsafe destination: \"a/./b\"",
+          "status": "passed",
+          "title": "rejects an unsafe destination: \"a/./b\"",
+          "duration": 0.03130000000001587,
+          "failureMessages": [],
+          "meta": {},
+          "tags": [],
+          "benchmarks": []
+        },
+        {
+          "ancestorTitles": [
+            "TEST-DR-P0-06 basename and complete relative paths"
+          ],
+          "fullName": "TEST-DR-P0-06 basename and complete relative paths rejects an unsafe destination: \"a/NUL\"",
+          "status": "passed",
+          "title": "rejects an unsafe destination: \"a/NUL\"",
+          "duration": 0.03489999999999327,
+          "failureMessages": [],
+          "meta": {},
+          "tags": [],
+          "benchmarks": []
+        },
+        {
+          "ancestorTitles": [
+            "TEST-DR-P0-06 basename and complete relative paths"
+          ],
+          "fullName": "TEST-DR-P0-06 basename and complete relative paths rejects an unsafe destination: \"a/bad\\u0001\"",
+          "status": "passed",
+          "title": "rejects an unsafe destination: \"a/bad\\u0001\"",
+          "duration": 0.030900000000002592,
+          "failureMessages": [],
+          "meta": {},
+          "tags": [],
+          "benchmarks": []
+        },
+        {
+          "ancestorTitles": [
+            "TEST-DR-P0-06 basename and complete relative paths"
+          ],
+          "fullName": "TEST-DR-P0-06 basename and complete relative paths does not decode filename characters or invent a name for a trailing separator",
+          "status": "passed",
+          "title": "does not decode filename characters or invent a name for a trailing separator",
+          "duration": 0.10730000000000928,
+          "failureMessages": [],
+          "meta": {},
+          "tags": [],
+          "benchmarks": []
+        }
+      ],
+      "startTime": 1792053061477,
+      "endTime": 1792053061482.1074,
+      "status": "passed",
+      "message": "",
+      "name": "D:/LocalProject/ChromeExtension/DownloadRouter/tests/unit/path-builder.test.ts"
+    },
+    {
+      "assertionResults": [
+        {
+          "ancestorTitles": ["TEST-DR-P0-07 RE2JS feasibility"],
+          "fullName": "TEST-DR-P0-07 RE2JS feasibility matches substrings and anchored patterns without native user-pattern evaluation",
+          "status": "passed",
+          "title": "matches substrings and anchored patterns without native user-pattern evaluation",
+          "duration": 7.963300000000004,
+          "failureMessages": [],
+          "meta": {},
+          "tags": [],
+          "benchmarks": []
+        },
+        {
+          "ancestorTitles": ["TEST-DR-P0-07 RE2JS feasibility"],
+          "fullName": "TEST-DR-P0-07 RE2JS feasibility rejects invalid or unsupported syntax: \"\"",
+          "status": "passed",
+          "title": "rejects invalid or unsupported syntax: \"\"",
+          "duration": 0.8411999999999864,
+          "failureMessages": [],
+          "meta": {},
+          "tags": [],
+          "benchmarks": []
+        },
+        {
+          "ancestorTitles": ["TEST-DR-P0-07 RE2JS feasibility"],
+          "fullName": "TEST-DR-P0-07 RE2JS feasibility rejects invalid or unsupported syntax: \"[\"",
+          "status": "passed",
+          "title": "rejects invalid or unsupported syntax: \"[\"",
+          "duration": 0.3511000000000024,
+          "failureMessages": [],
+          "meta": {},
+          "tags": [],
+          "benchmarks": []
+        },
+        {
+          "ancestorTitles": ["TEST-DR-P0-07 RE2JS feasibility"],
+          "fullName": "TEST-DR-P0-07 RE2JS feasibility rejects invalid or unsupported syntax: \"(?=a)\"",
+          "status": "passed",
+          "title": "rejects invalid or unsupported syntax: \"(?=a)\"",
+          "duration": 0.4176000000000215,
+          "failureMessages": [],
+          "meta": {},
+          "tags": [],
+          "benchmarks": []
+        },
+        {
+          "ancestorTitles": ["TEST-DR-P0-07 RE2JS feasibility"],
+          "fullName": "TEST-DR-P0-07 RE2JS feasibility rejects invalid or unsupported syntax: \"(?!a)\"",
+          "status": "passed",
+          "title": "rejects invalid or unsupported syntax: \"(?!a)\"",
+          "duration": 0.2691000000000088,
+          "failureMessages": [],
+          "meta": {},
+          "tags": [],
+          "benchmarks": []
+        },
+        {
+          "ancestorTitles": ["TEST-DR-P0-07 RE2JS feasibility"],
+          "fullName": "TEST-DR-P0-07 RE2JS feasibility rejects invalid or unsupported syntax: \"(?<=a)\"",
+          "status": "passed",
+          "title": "rejects invalid or unsupported syntax: \"(?<=a)\"",
+          "duration": 0.17650000000000432,
+          "failureMessages": [],
+          "meta": {},
+          "tags": [],
+          "benchmarks": []
+        },
+        {
+          "ancestorTitles": ["TEST-DR-P0-07 RE2JS feasibility"],
+          "fullName": "TEST-DR-P0-07 RE2JS feasibility rejects invalid or unsupported syntax: \"(?<!a)\"",
+          "status": "passed",
+          "title": "rejects invalid or unsupported syntax: \"(?<!a)\"",
+          "duration": 0.15720000000001733,
+          "failureMessages": [],
+          "meta": {},
+          "tags": [],
+          "benchmarks": []
+        },
+        {
+          "ancestorTitles": ["TEST-DR-P0-07 RE2JS feasibility"],
+          "fullName": "TEST-DR-P0-07 RE2JS feasibility rejects invalid or unsupported syntax: \"(a)\\\\1\"",
+          "status": "passed",
+          "title": "rejects invalid or unsupported syntax: \"(a)\\\\1\"",
+          "duration": 0.4265000000000043,
+          "failureMessages": [],
+          "meta": {},
+          "tags": [],
+          "benchmarks": []
+        },
+        {
+          "ancestorTitles": ["TEST-DR-P0-07 RE2JS feasibility"],
+          "fullName": "TEST-DR-P0-07 RE2JS feasibility rejects invalid or unsupported syntax: \"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\"",
+          "status": "passed",
+          "title": "rejects invalid or unsupported syntax: \"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\"",
+          "duration": 0.3897000000000048,
+          "failureMessages": [],
+          "meta": {},
+          "tags": [],
+          "benchmarks": []
+        },
+        {
+          "ancestorTitles": ["TEST-DR-P0-07 RE2JS feasibility"],
+          "fullName": "TEST-DR-P0-07 RE2JS feasibility accepts the pattern/input boundaries and skips only oversized input",
+          "status": "passed",
+          "title": "accepts the pattern/input boundaries and skips only oversized input",
+          "duration": 3.549199999999985,
+          "failureMessages": [],
+          "meta": {},
+          "tags": [],
+          "benchmarks": []
+        },
+        {
+          "ancestorTitles": ["TEST-DR-P0-07 RE2JS feasibility"],
+          "fullName": "TEST-DR-P0-07 RE2JS feasibility completes nested-quantifier nonmatches at increasing input sizes",
+          "status": "passed",
+          "title": "completes nested-quantifier nonmatches at increasing input sizes",
+          "duration": 7.396000000000015,
+          "failureMessages": [],
+          "meta": {},
+          "tags": [],
+          "benchmarks": []
+        }
+      ],
+      "startTime": 1792053061474,
+      "endTime": 1792053061496.396,
+      "status": "passed",
+      "message": "",
+      "name": "D:/LocalProject/ChromeExtension/DownloadRouter/tests/unit/regex.test.ts"
+    }
+  ]
+}

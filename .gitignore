@@ -1,0 +1,8 @@
+node_modules/
+dist/
+coverage/
+.cache/
+.pnpm-store/
+.test-artifacts/
+.vitest/
+*.log

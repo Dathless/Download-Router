@@ -1,0 +1,19 @@
+{
+  "manifest_version": 3,
+  "name": "Download Router",
+  "description": "Route downloads to local Downloads subdirectories using URL rules.",
+  "version": "0.1.0",
+  "minimum_chrome_version": "120",
+  "permissions": ["downloads", "storage"],
+  "background": { "service_worker": "background.js", "type": "module" },
+  "options_page": "options/index.html",
+  "action": { "default_popup": "popup/index.html" },
+  "icons": {
+    "16": "icons/16.png",
+    "48": "icons/48.png",
+    "128": "icons/128.png"
+  },
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'none'"
+  }
+}

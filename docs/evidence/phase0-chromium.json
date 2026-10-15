@@ -1,0 +1,92 @@
+{
+  "startedAt": "2026-10-15T08:28:00.511Z",
+  "node": "v24.18.0",
+  "platform": "win32",
+  "headless": true,
+  "artifacts": "D:\\LocalProject\\ChromeExtension\\DownloadRouter\\.test-artifacts\\2026-10-15T08-28-00-502Z",
+  "distSha256": {
+    "manifest.json": "adc337cecef655aac5ce73d57fa86dcf2c6b7e12ad8fbb6a625e19b2aae5de6a",
+    "background.js": "a7986eb8894417f146a07dcdc2b7a3d16f5db594f83ea8341f7fa4524e03c28a",
+    "regex.js": "3e1873806b53916246b79fb18891627f376c91f9440102641bc2041eee0dab9b"
+  },
+  "results": [
+    {
+      "id": "TEST-DR-P0-01",
+      "status": "pass",
+      "permissions": ["downloads", "storage"]
+    },
+    {
+      "id": "TEST-DR-P0-02",
+      "status": "pass",
+      "files": [
+        {
+          "relativePath": "DownloadRouterTest/Local/sample.txt",
+          "state": "complete",
+          "sha256": "fffa73a44ff5a744ec801d6f60f854ed34f74824c466552835dc5ef7c6477e4a"
+        },
+        {
+          "relativePath": "sample.txt",
+          "state": "complete",
+          "sha256": "fffa73a44ff5a744ec801d6f60f854ed34f74824c466552835dc5ef7c6477e4a"
+        },
+        {
+          "relativePath": "report.pdf",
+          "state": "complete",
+          "sha256": "713f574b5d3c0bca091eb3659f9307873132405b36a9996059283a9a3aa7e7d9"
+        }
+      ]
+    },
+    {
+      "id": "TEST-DR-P0-03",
+      "status": "pass",
+      "stopped": {
+        "versionId": "0",
+        "runningStatus": "stopped"
+      },
+      "restarted": {
+        "versionId": "0",
+        "runningStatus": "running",
+        "targetId": "0EF5F2E3AF0005DFF57B48B1CD85BB58"
+      },
+      "retainedGlobal": false,
+      "file": {
+        "relativePath": "DownloadRouterTest/Local/report.pdf",
+        "state": "complete",
+        "sha256": "713f574b5d3c0bca091eb3659f9307873132405b36a9996059283a9a3aa7e7d9"
+      },
+      "devtoolsWindowOpen": false
+    },
+    {
+      "id": "TEST-DR-P0-07",
+      "status": "pass",
+      "engine": "re2js@2.8.6",
+      "realm": "MV3 extension page, production bundle, script-src self",
+      "ordinary": true,
+      "rejected": [true, true, true, true, true, true, true],
+      "timings": [
+        {
+          "size": 129,
+          "matched": false,
+          "elapsedMs": 5.800000004470348
+        },
+        {
+          "size": 1025,
+          "matched": false,
+          "elapsedMs": 5.4000000059604645
+        },
+        {
+          "size": 8192,
+          "matched": false,
+          "elapsedMs": 11.800000004470348
+        }
+      ],
+      "atLimit": true,
+      "overLimit": false
+    }
+  ],
+  "browser": "149.0.7827.55",
+  "extensionId": "hllnfobnaghgogmgiddccjafalcbcdnm",
+  "pageErrors": [],
+  "workerErrors": [],
+  "status": "pass"
+}

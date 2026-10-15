@@ -1,0 +1,6 @@
+storeDir: .pnpm-store
+# Avoid concurrent script commands starting competing automatic installs in pnpm 12.
+verifyDepsBeforeRun: error
+minimumReleaseAgeExclude:
+  - playwright-core@1.64.1
+  - playwright@1.64.1
