@@ -1,0 +1,344 @@
+{
+  "version": "1.0.0",
+  "status": "pass",
+  "verifiedAt": "2026-10-15T15:04:42.464Z",
+  "environment": {
+    "platform": "win32",
+    "node": "v24.18.0",
+    "browser": "149.0.7827.55",
+    "headless": true
+  },
+  "revision": {
+    "baseCommit": "a6b4809ba4e9595f2ec869ac75e128ff5eaa8427",
+    "sourceDigest": "57427c22edc5ea803e73ea28f11134db6d47365699355bd79fd47dede52ffb9a",
+    "sourceSha256": {
+      ".gitattributes": "23302dd90b8bb74b44d365fafef8df20f809b61cb347023951ecf60a88a29651",
+      ".gitignore": "39065679c73770637985e0105a833ee70219af88e27b9ef143fbb812e927c776",
+      ".prettierignore": "73c05b804ff2b4a26ee4ab3bbe9ad7189cffce49453a0918a8bbcd698b7f4087",
+      "AGENTS.md": "7d53efd1a62a39a5becf3113455b9595b30f5cf2327131be9654f63118012709",
+      "CHANGELOG.md": "f4cb560270521ae6db7375d60d6ce6cb943386306488f58f5b73fb917d0cfa2d",
+      "README.md": "a4e9f525d7f06175d4614fcfca8eadfa8935bcaa693025480a8c598b1170c72a",
+      "docs/ARCHITECTURE.md": "1a84681d59181d12970f289ec916689a96578ab87a0edfdf3f1ce6dbc8478470",
+      "docs/RULES.md": "84003467b85d8e6160c98f55bcd4c552dc2dfaad40dfacc267e8b0aea901f158",
+      "docs/TESTING.md": "022f9808927bd53fcf30cd55a6e95452b355ae9d4e570e804298774ef065b4c1",
+      "docs/history/IMPLEMENTATION.md": "01e336960b00ad7a7e3c524953a7bbd84aa26f90144e0df00b654848c3f6c423",
+      "docs/planning/PLAN.md": "fa974b2a15cb8577cc89df2fb1916cf103606801ec168135a7af2860cbaac58a",
+      "docs/planning/workingphase.md": "c47313569e405b5a34ddd8f56539b8ae25c901f3e9483ce2c8b55050ab96b216",
+      "eslint.config.js": "5a965d39b55ec4cf6dd8dfb9681b2b67e8f109e54d67a9346fbf5ba06074e2d5",
+      "package.json": "3a08bbc4bc0ec906b07fccc537c35c2248ef10a4094c44d68cdc71b91bd58fc3",
+      "pnpm-lock.yaml": "cbd3b36956c661b90587ff0adb88778b02a89e54c6ee1330821222dc11a692f2",
+      "pnpm-workspace.yaml": "2c8016f00c7ea410928ffc3cd576c3c96852258cf9c4edee82232d458ab1aec9",
+      "public/RE2JS-LICENSE.txt": "b80a94f2c3c0b8bd6af849511cef624ad9feecbc0151d08bacad86ebab4cb46e",
+      "public/icons/128.png": "7eb7269875d29e4a6c8d3c09a4b5b917a06ef0babecae9f3388821cf6ce86170",
+      "public/icons/16.png": "555f38eaf7639bd6027e35b373c2d4a7d33684e1a1373a1c1731d4f239b06ed9",
+      "public/icons/48.png": "8dc64c04122aae073ee4accc7597056e4a96a17c0f4bea94dfa21085b748a1e2",
+      "public/manifest.json": "6d099f55997f628a0953c15a99f699b529273eb45eca20fa79d6349b1435b0eb",
+      "scripts/e2e.mjs": "b974f3d2f5944cac2915b5988929257dd41f951168433219bcd831419bab28ea",
+      "scripts/e2e/native-dialogs.mjs": "7237b9cc66c8a74134eec174885c61c2c9160aa558f9dbd94256123bb1235282",
+      "scripts/e2e/options.mjs": "496482f47917cbc35a60d3f8f4e343154591820d0521d677bb9545c36ba209ab",
+      "scripts/e2e/popup.mjs": "f53a1161b3af4eb649a5bcd8efc3bfdbabddb00f7259f82a524242243c315677",
+      "scripts/e2e/portability.mjs": "f14e62205e1e70b79faccd720a5071e56753434ffb57cb4f03d1f6edd975742f",
+      "scripts/e2e/release.mjs": "4188b89d6e7f2dac498746c002c01a91541340e1ff50ef282a2ac6f03b7875a2",
+      "scripts/e2e/reliability.mjs": "5fe7b5f55292bca0c6aa0e5a989619a7f7ac33957c57983b1ff052b47ccc21d2",
+      "scripts/fixture-server.mjs": "6e436084645649979207ba2da7c7c01a1cac0e205ef39a4eeb98b9b2d2fec014",
+      "scripts/prepare-release.mjs": "291f0f50615cc9a670faebaecd7a7e2f76699231392b752161d45c09b1776b5b",
+      "src/background/download-handler.ts": "aee147bfc8a8548d810bdfe51b65dae7c6db12417a1379c2eaf251c0b82d1dbc",
+      "src/background/index.ts": "8f8d2116a6505bdc51cc87c50d632151fed4f9362c88d12db6e1edd5559070d0",
+      "src/background/message-handler.ts": "58399ad2bf93e99b5e897eb354915fc0e99ed1601fe36a1c22a38fee246d2518",
+      "src/core/config-validator.ts": "24786eb8a7ba73c90e3c692785036fdfef331d2a82f445a3f2e1d672f857e4dd",
+      "src/core/import-export.ts": "1f5dca64bb7975bc3a4fcce2acc5b33f5dd195a6c30dff9266a97a0ca6346d43",
+      "src/core/message-validator.ts": "d5cfac3f48a167792050b81e65b3058fed9a7831179cd6218ddeb5db5a8e3e73",
+      "src/core/path-builder.ts": "64c55c13570ed97d16e17a55b68c2d7993e49b501beb0b6b58787f5e9cd4b080",
+      "src/core/path-validator.ts": "e3aca265629490d01f556ae7a289ba4f17c586355ceb2986bd333d1406c9ca25",
+      "src/core/rule-engine.ts": "a8829500751967dd2f6b6f54cd20ce8c7c41efddfea1cb7f2be9261eecaae2fc",
+      "src/core/rule-matcher.ts": "1506bfe20e9f3756fbaf6da0354fb2f469b15b6052d4859e3bbd40bdafdcf13a",
+      "src/core/rule-tester.ts": "06efbe486d1384c06737948a1f0a497a4d6a5069801f329c19ff4eb5075d68e9",
+      "src/core/url-normalizer.ts": "750db6d2994e2aca73f1e3d4bdb31da99a669277927b8d075923279f94745b0f",
+      "src/models/config.ts": "ba2a0d7739285939d25c0e8fbfba08dde744534fc399c2608fff1d73e39bf966",
+      "src/models/messages.ts": "87e62140980a608275be015a59f71180a22db9ce746b37cbc88cb279683c4606",
+      "src/models/routing-event.ts": "e0d3f47f82325d93a6caaee6cccca9abde864a081563b3d0fc2e125cd40c5640",
+      "src/options/index.html": "83ceb953616e4b37c3c674adbc0050d67a43acf2386062a85a465b8e1efa2d5d",
+      "src/options/index.ts": "0bdeaa108db4de60511c9aff7395d4888bbb052f398efa5d857b82f8a80dc866",
+      "src/options/options.css": "a0988963a2cdac2dd847b524d446f39d660f2fddb7690a53c07147479ce03831",
+      "src/options/rule-form.ts": "b1b2b928f31153dc4302b2b1388cb958fd9d47563a8556d58ce5e827f790fc99",
+      "src/popup/index.html": "214ee50e0661d41c269a87ce922cff049faba839e95419dfe87ecfc9b245266c",
+      "src/popup/index.ts": "e18059ac5e831ede83dc13965f28079d0b94ad4bdddaeb89cc0918c02c10219f",
+      "src/popup/popup.css": "3ff45acc8de035b2ebd49851c3739e2bf69a07fba64608b4208148a03c46228b",
+      "src/storage/config-client.ts": "96c4de2ad7f18682801e7fb918fd1fb76df5a75d3ee12f0aabf1171cb1c61975",
+      "src/storage/config-repository.ts": "fa1f0afa49d42731d08cecc38a81a4d708ecfbaf5b9d645264bba665fbf19ee5",
+      "src/storage/routing-event.ts": "7d052f2aa7934537e9923f698a4d8e1ccbe364a6553ced167b4b811354e7281f",
+      "src/style.css": "87e91e73f5426b5bb6b2e38c466fb6e68ce4fa82551e41925e77a1b7d0b81129",
+      "src/utils/regex.ts": "c799bad488b3831cf165a617bb98c0c22fc6aeb07a434b7137d2930ba735b4e4",
+      "tests/fixtures/config.ts": "d59dd81d31e1659dc95610b5d27be8042e348fcd3540b1ec0387a3e239e8dfcc",
+      "tests/fixtures/path-corpus.json": "774fb499ee5220608b173bb7693448dbe41662815c6ca7c8923eec171256fa20",
+      "tests/fixtures/portable-config.json": "2d6c9336c22b6a538a6972d17a41c136c74317ff224cd44a6972b13fe3876306",
+      "tests/fixtures/reliability.ts": "aa2fe78add5d443e82fcf523ec1f67797ecbfa90ebb10d5e8889f3a6d0fdd8c8",
+      "tests/fixtures/rules.ts": "ceaacf3576ed613dbcc8113ac01f78296f2e18e71f1910a964a28173b857c022",
+      "tests/fixtures/storage.ts": "04f64e64cff381052367ac191f0d8c2e178b0aa9bbfe23a5afce91670319525b",
+      "tests/integration/download-routing.test.ts": "c4081732e87970f87a9b93d6ff34b276a3598fc8410d4ba207ddd1de2db08c8f",
+      "tests/integration/popup.test.ts": "298b865418c9581739734b55f617400d604ad8ecb07b5e8a9cdb4128ea5992ec",
+      "tests/unit/background-startup.test.ts": "5b67d0bb3c11c316c905a8f2e9d492c2dc4ce34128f08af55083928080028594",
+      "tests/unit/config-repository.test.ts": "aab9f4da21b7300707d624a42c4025c31129ff80e9621ddafa52554fc6e191ac",
+      "tests/unit/config-validator.test.ts": "bc63f7fc356660b315f34c2ebfd858fb2321536cc39d6be0de6570fb4bf8c2b8",
+      "tests/unit/download-handler.test.ts": "16ceef50f15c99b679416f0b3f6c825ef6306df480ca7083782bfe64bf4f1f4a",
+      "tests/unit/fixture-server.test.js": "62cd21e218dc5d6fff3df7b526708bfddca38f4e77328fe566b4b71e579f2cca",
+      "tests/unit/import-export.test.ts": "bb57d6def46da49effda9c0e23db709b66a83be1baaa4aef6ae7485f01bc627d",
+      "tests/unit/message-handler.test.ts": "5e6b30c880ddfc086f66a7749dc72afaba34b6e5270d0a2b158c00d03066fc1f",
+      "tests/unit/path-builder.test.ts": "ac4f6e410ddc8a2b4040e00c7a03a1a1b12f3e98c84de7998697ac21364613ef",
+      "tests/unit/path-validator.test.ts": "98b281ee711b32e4e47b171053ef8a0be91461f7f612df891c6efcf475fa455d",
+      "tests/unit/regex.test.ts": "eefc7b74ff4887d439fb31e8ea6828505c027dd4f29f95ce45ba48befd39e68b",
+      "tests/unit/reliability.test.ts": "b0d97d6ce0fb029084d859e0174436810b768245d6d40e99544ca55539fd31a7",
+      "tests/unit/routing-event.test.ts": "bc034b45971fbd164e1daf14fb0bafab6466da8da1aa1053aad330fa80fb6df1",
+      "tests/unit/rule-engine.test.ts": "c9fe00d0346351a15e2830f167d71f01d6cf12bab64e7cd71e08e9814904dffb",
+      "tests/unit/rule-form.test.ts": "39720173098cfb78e051a33b8f330e789efbe39944c643f0030a97ce2da0a1d7",
+      "tests/unit/rule-matcher.test.ts": "835cbcb51d2d797f6bc3e9344f222bf6b4bc5e1fb1a0743d0d0a81d20c0d3989",
+      "tests/unit/rule-tester.test.ts": "940a8c3c4759f6d0a7181360916751657fc53b30efb7b78f9f08a5e92adee4e2",
+      "tests/unit/url-normalizer.test.ts": "4e834d6934dfdd4e92ff8509084a9c588d6614628243e930c2dff7e5f733872b",
+      "tsconfig.json": "e0738bd23d6c22f8e2b78d0bf7b523501d969da446773bd994058a3a47606f71",
+      "vite.config.ts": "02eef21585e1d223f8aab6c93b5ddf73d52b2867cfdc4d741d52bb004c351985",
+      "vitest.config.ts": "8ad89936fb5c47b3c4a16bd427df1b84d780fb472f48dc745f685860477d1967"
+    }
+  },
+  "commands": [
+    {
+      "command": "pnpm install --frozen-lockfile --offline",
+      "exitCode": 0
+    },
+    {
+      "command": "pnpm typecheck",
+      "exitCode": 0
+    },
+    {
+      "command": "pnpm lint",
+      "exitCode": 0
+    },
+    {
+      "command": "pnpm format:check",
+      "exitCode": 0
+    },
+    {
+      "command": "pnpm test:coverage --reporter=json --outputFile=<artifacts>\\unit.json",
+      "exitCode": 0
+    },
+    {
+      "command": "pnpm build",
+      "exitCode": 0
+    },
+    {
+      "command": "pnpm test:e2e",
+      "exitCode": 0
+    },
+    {
+      "command": "pnpm build",
+      "exitCode": 0
+    }
+  ],
+  "unit": {
+    "tests": 466,
+    "passed": 466,
+    "files": 19
+  },
+  "coverage": {
+    "scope": "src/core/**/*.ts",
+    "modules": 9,
+    "lines": {
+      "total": 170,
+      "covered": 170,
+      "skipped": 0,
+      "pct": 100
+    },
+    "statements": {
+      "total": 194,
+      "covered": 193,
+      "skipped": 0,
+      "pct": 99.48
+    },
+    "functions": {
+      "total": 35,
+      "covered": 35,
+      "skipped": 0,
+      "pct": 100
+    },
+    "branches": {
+      "total": 275,
+      "covered": 271,
+      "skipped": 0,
+      "pct": 98.54
+    },
+    "branchesTrue": {
+      "total": 0,
+      "covered": 0,
+      "skipped": 0,
+      "pct": "Unknown"
+    }
+  },
+  "testLedger": {
+    "covered": [
+      "TEST-DR-P0-01",
+      "TEST-DR-P0-02",
+      "TEST-DR-P0-03",
+      "TEST-DR-P0-04",
+      "TEST-DR-P0-05",
+      "TEST-DR-P0-06",
+      "TEST-DR-P0-07",
+      "TEST-DR-P1-01",
+      "TEST-DR-P1-02",
+      "TEST-DR-P1-03",
+      "TEST-DR-P1-04",
+      "TEST-DR-P1-05",
+      "TEST-DR-P1-06",
+      "TEST-DR-P1-07",
+      "TEST-DR-P1-08",
+      "TEST-DR-P2-01",
+      "TEST-DR-P2-02",
+      "TEST-DR-P2-03",
+      "TEST-DR-P2-04",
+      "TEST-DR-P2-05",
+      "TEST-DR-P2-06",
+      "TEST-DR-P2-07",
+      "TEST-DR-P3-01",
+      "TEST-DR-P3-02",
+      "TEST-DR-P3-03",
+      "TEST-DR-P3-04",
+      "TEST-DR-P3-05",
+      "TEST-DR-P3-06",
+      "TEST-DR-P3-07",
+      "TEST-DR-P4-01",
+      "TEST-DR-P4-02",
+      "TEST-DR-P4-03",
+      "TEST-DR-P4-04",
+      "TEST-DR-P4-05",
+      "TEST-DR-P5-01",
+      "TEST-DR-P5-02",
+      "TEST-DR-P5-03",
+      "TEST-DR-P5-04",
+      "TEST-DR-P5-05",
+      "TEST-DR-P5-06",
+      "TEST-DR-P6-01",
+      "TEST-DR-P6-02",
+      "TEST-DR-P6-03",
+      "TEST-DR-P6-04",
+      "TEST-DR-P6-05",
+      "TEST-DR-P6-06",
+      "TEST-DR-P6-07",
+      "TEST-DR-P7-01",
+      "TEST-DR-P7-02",
+      "TEST-DR-P7-03",
+      "TEST-DR-P7-04",
+      "TEST-DR-P7-05"
+    ],
+    "unverified": [],
+    "missing": []
+  },
+  "distSha256": {
+    "RE2JS-LICENSE.txt": "b80a94f2c3c0b8bd6af849511cef624ad9feecbc0151d08bacad86ebab4cb46e",
+    "assets/config-client-Bd42UdgB.js": "64901b2c437795d50ad7cd6fa1d94dc68e9e74f11549fb7acc3fc9a3c7f7c084",
+    "assets/config-client-DtBPKrC3.css": "655432d4d5979417494e84425792eb618d472ae939a8344dcecdce83799f39f5",
+    "assets/message-validator-BKpsSyUS.js": "a41ba58e32611c9dd0dc33d0d3dfce41ccfd03284bbe61f128ddd0d6c080c7db",
+    "assets/options-B0Xee_Gj.css": "7c41a6d549f67f2c19377602d6d9b13129d24bdb471bccc7fac391d06a900f3a",
+    "assets/popup-R7LRsQ2u.css": "49f5ae66e7048b253c9eb388660d7b2bbe5fac22e71bcf4faa6dc3b20cc696b9",
+    "assets/regex-CSUn3emm.js": "7212a3cc9df6dea7964c3350685289576c61ffa1aa4e12a4b1bea5cd1efa6de1",
+    "assets/routing-event-By7tc3aO.js": "70ef51bb263701098d11385b7c15a55f86901d26818210e35778791dd11a7907",
+    "assets/rule-engine-QmZ09E04.js": "3ce2a4a097fd903fe16224e8656dc40d550f6af896f17de09859139a51c33446",
+    "background.js": "41ece92c0593e70af937f190008dfa4b9596e074b865a04f3488d035dfd556ed",
+    "icons/128.png": "7eb7269875d29e4a6c8d3c09a4b5b917a06ef0babecae9f3388821cf6ce86170",
+    "icons/16.png": "555f38eaf7639bd6027e35b373c2d4a7d33684e1a1373a1c1731d4f239b06ed9",
+    "icons/48.png": "8dc64c04122aae073ee4accc7597056e4a96a17c0f4bea94dfa21085b748a1e2",
+    "manifest.json": "6d099f55997f628a0953c15a99f699b529273eb45eca20fa79d6349b1435b0eb",
+    "options.js": "d9f08ce80a751e99c09cf7d2c848c134f0611bc3bb1c6e731e200c20e7730af0",
+    "options/index.html": "18a06f111fd74cc023f47d5b438b200010e68a0608edeb82749ddc84b6bcf079",
+    "popup.js": "18a1df9b4d47a9786e5de7e731680cdb18d8d7f6b5704b62195833fadc109f84",
+    "popup/index.html": "a57fbe96707166f4b84c2ecdac25fe6f2c912b37cfa25b3767aced8f520fb2c7",
+    "regex.js": "1b5ed609da0d5d42c9f3ca4838a48ff482d25da3ca27a525045219c912f399f6"
+  },
+  "package": {
+    "file": "download-router-1.0.0.zip",
+    "sha256": "19d25d49d58a1d91080c116917154dd871224c071229683c295b961d16adef44",
+    "zipContentsVerified": true,
+    "reproducibleBuild": true
+  },
+  "browser": {
+    "pageErrors": [],
+    "workerErrors": [],
+    "workflow": {
+      "first": {
+        "downloadId": 68,
+        "relativePath": "DownloadRouterTest/Phase7/Release/release-first.txt",
+        "state": "complete",
+        "sha256": "fffa73a44ff5a744ec801d6f60f854ed34f74824c466552835dc5ef7c6477e4a"
+      },
+      "backup": {
+        "downloadId": 69,
+        "relativePath": "download-router-config (1).json",
+        "state": "complete",
+        "sha256": "7770226037d8f199094ba579163c4ae5a7e244e4240859dcff4c6e2e5b4e9fbb"
+      },
+      "cold": {
+        "downloadId": 70,
+        "relativePath": "DownloadRouterTest/Phase7/Release/release-cold.txt",
+        "state": "complete",
+        "sha256": "fffa73a44ff5a744ec801d6f60f854ed34f74824c466552835dc5ef7c6477e4a"
+      },
+      "disabled": {
+        "downloadId": 71,
+        "relativePath": "release-disabled.txt",
+        "state": "complete",
+        "sha256": "fffa73a44ff5a744ec801d6f60f854ed34f74824c466552835dc5ef7c6477e4a"
+      },
+      "restored": {
+        "downloadId": 72,
+        "relativePath": "DownloadRouterTest/Phase7/Release/release-restored.txt",
+        "state": "complete",
+        "sha256": "fffa73a44ff5a744ec801d6f60f854ed34f74824c466552835dc5ef7c6477e4a"
+      }
+    },
+    "reload": true,
+    "upgrade": {
+      "from": "0.1.0",
+      "to": "1.0.0",
+      "exactConfigPreserved": true,
+      "backupSha256": "4b37e02c42ec6b1c989329d153eaa7dca714eb368ee6ab76490f8a4e31a67083",
+      "file": {
+        "downloadId": 2,
+        "relativePath": "DownloadRouterTest/Phase7/Upgrade/release-upgrade.txt",
+        "state": "complete",
+        "sha256": "fffa73a44ff5a744ec801d6f60f854ed34f74824c466552835dc5ef7c6477e4a"
+      }
+    },
+    "competingExtensions": {
+      "fixtureOnly": true,
+      "files": [
+        {
+          "requestedLoadOrder": ["competitor"],
+          "bothSuggested": false,
+          "downloadId": 1,
+          "relativePath": "DownloadRouterTest/Phase7/Competitor/competing-0.txt",
+          "state": "complete",
+          "sha256": "fffa73a44ff5a744ec801d6f60f854ed34f74824c466552835dc5ef7c6477e4a"
+        },
+        {
+          "requestedLoadOrder": ["Download Router", "competitor"],
+          "bothSuggested": true,
+          "downloadId": 1,
+          "relativePath": "DownloadRouterTest/Phase7/Competitor/competing-1.txt",
+          "state": "complete",
+          "sha256": "fffa73a44ff5a744ec801d6f60f854ed34f74824c466552835dc5ef7c6477e4a"
+        },
+        {
+          "requestedLoadOrder": ["competitor", "Download Router"],
+          "bothSuggested": true,
+          "downloadId": 1,
+          "relativePath": "DownloadRouterTest/Local/competing-2.txt",
+          "state": "complete",
+          "sha256": "fffa73a44ff5a744ec801d6f60f854ed34f74824c466552835dc5ef7c6477e4a"
+        }
+      ]
+    }
+  },
+  "limitations": [
+    "Windows/Chromium 149 only; Chrome 120 binary untested",
+    "Natural idle and screen reader untested",
+    "Third-party compatibility represented by controlled fixture only",
+    "Native Save As evidence is historical; see native-dialogs-2026-10-15.json"
+  ]
+}

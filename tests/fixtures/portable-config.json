@@ -1,0 +1,49 @@
+{
+  "configVersion": 1,
+  "settings": {
+    "enabled": true,
+    "matchRedirectedUrl": true,
+    "defaultConflictAction": "uniquify"
+  },
+  "rules": [
+    {
+      "id": "portable-first",
+      "name": "First tie winner",
+      "enabled": true,
+      "match": {
+        "type": "domain",
+        "pattern": "127.0.0.1",
+        "extensions": ["txt"],
+        "mimeTypes": ["text/plain"]
+      },
+      "destination": "DownloadRouterTest/Phase6/Restored",
+      "priority": 50,
+      "createdAt": 123,
+      "updatedAt": 456
+    },
+    {
+      "id": "portable-second",
+      "name": "Second equal priority",
+      "enabled": true,
+      "match": {
+        "type": "regex",
+        "pattern": "^http://127[.]0[.]0[.]1:[0-9]+/files/.*[.]txt$"
+      },
+      "destination": "DownloadRouterTest/Phase6/Later",
+      "priority": 50,
+      "conflictAction": "overwrite",
+      "createdAt": 234,
+      "updatedAt": 567
+    },
+    {
+      "id": "portable-disabled",
+      "name": "Disabled fixture",
+      "enabled": false,
+      "match": { "type": "prefix", "pattern": "https://example.com/" },
+      "destination": "DownloadRouterTest/Phase6/Disabled",
+      "priority": 100,
+      "createdAt": 345,
+      "updatedAt": 678
+    }
+  ]
+}

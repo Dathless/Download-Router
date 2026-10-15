@@ -1,76 +1,104 @@
 # Download Router
 
-Chrome extension local-first để gợi ý thư mục con cho file tải xuống. **Hiện đã triển khai nền tảng Phase 0, chưa phải bản v1 hoàn chỉnh.**
+Chrome extension MV3 gợi ý thư mục lưu file theo URL, loại file và MIME. Dữ liệu xử lý cục bộ; chỉ sử dụng quyền `downloads` và `storage`, không backend hoặc telemetry.
 
-Phase 0 chỉ route domain chính xác, không có filter extension/MIME. Lần cài mới tạo một rule mẫu:
+**Phiên bản:** 1.0.0 · **Nhánh mặc định:** `dev` · **Cách cài:** Load unpacked.
 
-```text
-127.0.0.1 → <Chrome Downloads>/DownloadRouterTest/Local/
-```
+## Tính năng
 
-Các download không khớp, routing bị tắt hoặc extension gặp lỗi đi theo hành vi mặc định của Chrome. Đích đến luôn nằm dưới thư mục Downloads do Chrome cấu hình. Options/popup hiện là trang tối thiểu; CRUD và toggle qua UI sẽ được thực hiện ở các phase sau.
+- Match theo domain, URL prefix, glob hoặc regex RE2JS đã bundle; lọc extension/MIME.
+- Chọn rule theo priority, hòa thì giữ thứ tự đã lưu; có tùy chọn xét URL sau redirect.
+- Quản lý rule, nhân bản, bật/tắt và thử rule trong Options; thao tác nhanh từ popup.
+- Xử lý tên trùng bằng `uniquify`, `overwrite` hoặc `prompt`; mặc định `uniquify`.
+- Export/import JSON có preview và xác nhận; giữ ID, timestamps, thứ tự và cấu hình khi ghi lỗi.
 
-## Yêu cầu
+Extension chỉ đề xuất **thư mục con của Downloads**. Chrome, Save As và extension khác có thể thay tên/vị trí cuối. Không match, routing bị tắt hoặc handler gặp lỗi sẽ dùng hành vi mặc định của Chrome.
 
-- Node.js 24.x; môi trường đã kiểm chứng: 24.18.0.
-- pnpm 12.3.4, được chốt trong package.json.
-- Chrome/Chromium 120 trở lên; E2E Phase 0 đã chạy trên Chromium 149.0.7827.55, Windows, headless.
+## Cài đặt
 
-## Cài dependency và build
+Cần Node.js **24.x**, pnpm **12.3.4** và Chrome/Chromium **120+**. Môi trường đã kiểm chứng là Windows x64 với Chromium 149; Chrome 120 thực tế chưa được kiểm thử.
 
 ```powershell
+git clone --branch dev https://github.com/Dathless/Download-Router.git
+cd Download-Router
 pnpm install --frozen-lockfile
-pnpm typecheck
-pnpm lint
-pnpm format:check
-pnpm test
 pnpm build
 ```
 
-Dependency store nằm trong .pnpm-store và không được commit. pnpm run sẽ báo lỗi nếu dependency không đồng bộ thay vì tự chạy install song song; khi thay package.json, chạy lại pnpm install trước.
+1. Mở `chrome://extensions`, bật **Developer mode**.
+2. Chọn **Load unpacked**, mở thư mục `dist/`.
+3. Bấm icon extension → **Mở cài đặt**, hoặc Details → Extension options.
 
-## Load extension
+Nếu dùng ZIP đã build, giải nén rồi Load unpacked thư mục chứa `manifest.json`. Extension hoạt động từ artifact, không cần Node, pnpm hoặc dev server sau khi build. Giữ Developer mode bật khi reload bản unpacked.
 
-1. Mở một profile Chrome dùng để thử nghiệm.
-2. Vào chrome://extensions, bật Developer mode.
-3. Chọn **Load unpacked** và chọn thư mục dist của dự án.
-4. Mở Details → Extension options hoặc bấm icon extension → Mở cài đặt.
+## Sử dụng
 
-Để phát triển, chạy pnpm dev. Sau khi build thay đổi, bấm Reload extension trong chrome://extensions và tải lại options/popup. Dùng build --watch cho extension; không dùng Vite HMR/dev server làm runtime của extension.
+Trong Options, chọn **Thêm rule**, nhập matcher/pattern, thư mục tương đối, filters và priority rồi lưu. Ví dụ:
 
-## Thử tải bằng trình duyệt
+| Matcher | Pattern                                     | Thư mục con          |
+| ------- | ------------------------------------------- | -------------------- |
+| Domain  | `github.com`                                | `Development/GitHub` |
+| Prefix  | `https://example.com/reports/`              | `Reports`            |
+| Glob    | `https://*.example.com/files/*.pdf`         | `Documents`          |
+| Regex   | `^https://example[.]com/releases/.*[.]zip$` | `Archives`           |
+
+Priority cao hơn thắng; cùng priority thì rule đứng trước thắng. Domain match chính xác hostname, không tự gồm subdomain. Filters cách nhau bằng dấu phẩy; để trống nếu không giới hạn. Chi tiết grammar và giới hạn: [Quy tắc định tuyến](docs/RULES.md).
+
+**Thử rule** dùng bản nháp với settings đã lưu; cần URL, basename Chrome và MIME khi có MIME filter. Tester không ghi cấu hình hoặc tải file, và không hứa winner của cả danh sách. Lưu lỗi giữ bản nháp; mất phản hồi sau write cần **Đọc lại cấu hình** trước khi thử lại.
+
+Popup có công tắc routing, số rule và **Đề xuất gần nhất**. Event chỉ lưu timestamp/rule ID/basename/destination trên máy; đây là đề xuất best effort, không phải xác nhận file đã tải hoàn tất.
+
+Lần cài mới có rule mẫu `127.0.0.1 → DownloadRouterTest/Local`. Có thể tắt hoặc xóa rule này bằng UI. `overwrite` có thể thay nội dung file cũ; chỉ kiểm thử với file giả.
+
+## Backup và nâng cấp
+
+Trong Options → **Sao lưu và khôi phục**:
+
+1. **Xuất JSON** để tải `download-router-config.json` từ cấu hình đã lưu; file không chứa event/log hoặc bản nháp.
+2. Chọn JSON tối đa **16 MiB**, bấm **Xem trước thay thế**, kiểm tra số rule/settings.
+3. Chỉ **Xác nhận thay toàn bộ** khi muốn thay tất cả settings/rules. Hủy không ghi dữ liệu; không merge hoặc migrate.
+
+File sai version, field, ID, rule, regex hoặc đường dẫn bị từ chối toàn bộ. Cấu hình đổi sau preview yêu cầu xem trước lại. Ghi lỗi giữ dữ liệu cũ; mất channel không tự retry vì write có thể đã commit.
+
+Trước khi nâng cấp, giữ backup và artifact cũ. Thay artifact trong **cùng thư mục**, bấm Reload ở `chrome://extensions` rồi mở lại Options/Popup để giữ extension ID/profile. Rollback cùng schema v1 cũng dùng thư mục đó; không clear storage. Chỉ import backup khi chủ động muốn thay cấu hình hiện tại.
+
+## Phát triển và kiểm thử
 
 ```powershell
-pnpm test:fixtures
-```
-
-Mở [HTTP fixture cục bộ](http://127.0.0.1:8173/) trong profile thử đã load extension. Bấm Direct attachment; sample.txt phải nằm trong Downloads/DownloadRouterTest/Local. Bấm Content-Disposition PDF để xác nhận Chrome giữ tên report.pdf dù URL không có tên file. Fixture PDF chỉ là payload thử, không phải tài liệu người dùng. Ctrl+C để dừng server.
-
-Mở cùng trang bằng hostname localhost để thử no-match: rule mẫu là 127.0.0.1, không phải localhost. Tránh kiểm thử với tài liệu thật; không có rule overwrite mặc định.
-
-## Kiểm thử tự động
-
-```powershell
-pnpm test
+pnpm typecheck
+pnpm lint
+pnpm format:check
 pnpm test:coverage
 pnpm build
 pnpm exec playwright install chromium
 pnpm test:e2e
 ```
 
-Lệnh cài Chromium là bước chuẩn bị nếu máy chưa có browser phù hợp với Playwright. Có thể dùng binary Chromium thử nghiệm đã có bằng cách đặt biến môi trường của riêng phiên shell:
+`pnpm dev` build theo dõi thay đổi; sau build cần Reload extension. Không dùng Vite HMR làm runtime. E2E sử dụng profile và Downloads riêng trong `.test-artifacts/`; không mở Chrome cá nhân. Có thể đặt `CHROMIUM_EXECUTABLE` tới browser thử đã cài.
 
-```powershell
-$env:CHROMIUM_EXECUTABLE = 'C:\path\to\chromium\chrome.exe'
-pnpm test:e2e
+Hướng dẫn fixture, native dialogs, benchmark, release và bằng chứng: [Kiểm thử](docs/TESTING.md). Bộ kiểm chứng v1 có **466 tests**, core line coverage **100%** và **52 TEST-ID** trong boundary được ghi rõ; xem [evidence](docs/evidence/v1.0.0.json) để đối chiếu revision/build.
+
+## Cấu trúc và tài liệu
+
+```text
+src/                   Core, models, background, storage, options, popup
+public/                Manifest, icons, thông báo license của RE2JS
+tests/                 Unit/integration tests và fixture dùng chung
+scripts/e2e.mjs        Browser regression runner
+scripts/e2e/           Kịch bản Options, Popup, portability, reliability, release
+scripts/               HTTP fixture server và chuẩn bị release
+docs/                  Hợp đồng kỹ thuật, kiểm thử và evidence gọn
+docs/planning/         Kế hoạch gốc và các phase đã hoàn thành
+docs/history/          Tóm tắt lịch sử triển khai và quyết định giữ lại
 ```
 
-E2E tạo profile mới và thư mục Downloads trong .test-artifacts cho mỗi lượt chạy. Nó kiểm tra file trên đĩa, trạng thái complete trong Chrome download history, worker bị stop rồi được download đánh thức, và RE2JS trong MV3/CSP. Không dùng profile Chrome cá nhân hoặc ghi vào Downloads cá nhân. Lưu evidence theo đường dẫn được in sau mỗi lượt chạy; profile/file thử không được commit.
+| Tài liệu                                  | Nội dung                                             |
+| ----------------------------------------- | ---------------------------------------------------- |
+| [ARCHITECTURE](docs/ARCHITECTURE.md)      | Module, luồng dữ liệu, message API và bảo vệ dữ liệu |
+| [RULES](docs/RULES.md)                    | Grammar matcher/filter, priority, URL và đường dẫn   |
+| [TESTING](docs/TESTING.md)                | Lệnh kiểm tra, boundary và quy trình release         |
+| [CHANGELOG](CHANGELOG.md)                 | Thay đổi phiên bản và giới hạn đã biết               |
+| [Lịch sử](docs/history/IMPLEMENTATION.md) | Tiến trình v1 và provenance bằng chứng               |
+| [AGENTS](AGENTS.md)                       | Hướng dẫn sửa dự án và yêu cầu kiểm chứng            |
 
-Unit suite có fixture HTTP cục bộ nên môi trường sandbox phải cho phép kết nối loopback. Xem [biên bản Phase 0](D:/LocalProject/ChromeExtension/DownloadRouter/docs/TESTING.md) để biết chính xác phần nào đã chạy thật.
-
-## Phạm vi tiếp theo
-
-Xem [kế hoạch](D:/LocalProject/ChromeExtension/DownloadRouter/PLAN.md) và [working phases](D:/LocalProject/ChromeExtension/DownloadRouter/workingphase.md). Phase 1 bổ sung toàn bộ matcher/filter/validator; Phase 2 hoàn thiện serialized mutations; Phase 3–4 bổ sung UI; import/export ở Phase 6. Phase 0 bỏ qua các rule dùng matcher/filter chưa hỗ trợ và không ghi lại cấu hình để loại chúng.
-
-Extension chỉ có quyền downloads và storage, không backend/telemetry. RE2JS 2.8.6 (MIT) được bundle cục bộ; thông báo license nằm trong public/RE2JS-LICENSE.txt và được copy vào dist khi build.
+Raw logs, browser profiles, Downloads, cache, coverage và build outputs không thuộc cây source hiện tại. Chỉ evidence gọn, không chứa đường dẫn máy cá nhân, được chọn để theo dõi trong Git. RE2JS 2.8.6 dùng MIT; [license của dependency](public/RE2JS-LICENSE.txt) được kèm artifact. Chưa publish lên Chrome Web Store.

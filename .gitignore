@@ -6,3 +6,9 @@ coverage/
 .test-artifacts/
 .vitest/
 *.log
+.ecc/
+.env
+.env.*
+*.tsbuildinfo
+.DS_Store
+Thumbs.db

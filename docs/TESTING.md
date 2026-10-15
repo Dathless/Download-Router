@@ -1,86 +1,106 @@
-# Kiểm thử và nghiệm thu
+# Kiểm thử và phát hành
 
-Danh mục yêu cầu và TEST-ID nằm trong [workingphase.md](D:/LocalProject/ChromeExtension/DownloadRouter/workingphase.md). Tài liệu này ghi điểm vào thực thi, boundary và bằng chứng; không thay đổi điều kiện nghiệp vụ trong PLAN.md.
+Tài liệu này mô tả cách kiểm chứng source hiện tại. [Evidence v1.0.0](evidence/v1.0.0.json) ghi source digest, lệnh/exit code, coverage, TEST-ID, production/ZIP hashes và các kết quả browser đã chọn. [Lịch sử triển khai](history/IMPLEMENTATION.md) giữ provenance và các giới hạn của bằng chứng cũ.
 
-## Điểm vào
+## Môi trường và quality gates
 
-| Lệnh               | Phạm vi                                             | Boundary                                                                            |
-| ------------------ | --------------------------------------------------- | ----------------------------------------------------------------------------------- |
-| pnpm typecheck     | TypeScript source, config và test TS                | Không browser                                                                       |
-| pnpm lint          | Source, config, scripts và test                     | Không browser                                                                       |
-| pnpm format:check  | Mã và tài liệu được Prettier quản lý                | Hai tài liệu kế hoạch giữ layout gốc và có trong .prettierignore                    |
-| pnpm test          | 5 test files, 59 assertions/test cases của Phase 0  | Core/handler/repository thật; Chrome API và timer giả; fixture HTTP/loopback thật   |
-| pnpm test:coverage | Cùng suite; đo toàn bộ src/core/**/*.ts             | V8 coverage, không trộn UI vào core                                                 |
-| pnpm build         | Production dist                                     | Executable local, manifest entries ổn định                                          |
-| pnpm test:fixtures | Fixture server 127.0.0.1:8173                       | HTTP attachments/redirect, không đọc filesystem người dùng                          |
-| pnpm test:e2e      | Extension unpacked + Chromium + file Downloads thật | Profile và download root mới trong .test-artifacts; không mock Chrome extension API |
+- Node 24.x, pnpm 12.3.4 theo `packageManager` và lockfile.
+- Chromium tương thích Playwright; môi trường đã kiểm chứng: Windows x64, Chromium 149.0.7827.55.
+- Fixture HTTP dùng loopback; sandbox phải cho phép kết nối cục bộ.
 
-Chạy pnpm install --frozen-lockfile trước. Nếu thiếu Chromium, chạy pnpm exec playwright install chromium; hoặc đặt CHROMIUM_EXECUTABLE tới binary Chromium thử nghiệm. Fixture server được E2E khởi động ở cổng trống và đóng trong finally. Mỗi lần chạy giữ report/profile/file riêng để kiểm tra, không commit profile và Downloads.
+```powershell
+pnpm install --frozen-lockfile
+pnpm typecheck
+pnpm lint
+pnpm format:check
+pnpm test:coverage
+pnpm build
+pnpm test:e2e
+```
 
-## Thủ tục Chrome thủ công để chạy lại
+Không sửa dependency hoặc lockfile để chạy test. Nếu thiếu browser, chạy `pnpm exec playwright install chromium`, hoặc đặt đường dẫn binary thử:
 
-1. Build, load dist vào profile thử theo README; giữ settings Save As tắt cho baseline này.
-2. Chạy fixture server, mở http://127.0.0.1:8173 và tải Direct attachment. Xác nhận nội dung file và đường dẫn Downloads/DownloadRouterTest/Local/sample.txt.
-3. Đổi hostname trang sang localhost và tải để kiểm tra no-match: file ở Downloads gốc theo Chrome mặc định. Bài E2E tự kiểm tra thêm nhánh disabled bằng cách sửa config chỉ trong profile thử của nó.
-4. Đóng worker DevTools, dừng worker từ công cụ Chrome hoặc chờ nó idle. Bắt đầu một download mới rồi kiểm tra file và trạng thái complete. Ghi rõ cách dừng: bằng chứng hiện có sử dụng CDP stop, chưa kiểm chứng chờ idle tự nhiên.
-5. Không dùng thao tác saveAs của test runner để đưa file vào đường dẫn mong đợi. Đường dẫn phải được Chrome ghi thật theo suggestion của extension.
-6. Kiểm tra console/CSP và ghi Chrome version, OS, revision, fixture, đường dẫn thực tế. Không ghi dữ liệu URL/token thật vào biên bản.
+```powershell
+$env:CHROMIUM_EXECUTABLE = 'C:\path\to\chromium\chrome.exe'
+pnpm test:e2e
+```
 
-## Biên bản Phase 0 — 2026-10-15
+## Phạm vi kiểm tra
 
-Môi trường thực thi: Windows x64; Node 24.18.0; pnpm 12.3.4; TypeScript 5.9.3; Vite 8.3.4; Vitest 5.0.4; Playwright 1.64.1; RE2JS 2.8.6 (MIT). Chromium thử nghiệm 149.0.7827.55 headless, profile mới. Không sử dụng profile Chrome cá nhân.
+| Nhóm           | Điểm vào                          | Boundary                                                                                |
+| -------------- | --------------------------------- | --------------------------------------------------------------------------------------- |
+| Core/contract  | `tests/unit/`                     | Validator, matchers, pipeline và path thật; Chrome API/timer giả theo ca                |
+| Integration    | `tests/integration/`              | Handler/repository/client thật; storage/messaging/DOM shell giả tại biên                |
+| Browser        | `scripts/e2e.mjs`, `scripts/e2e/` | Production unpacked, Chrome API, UI, HTTP fixture và filesystem thật                    |
+| Native dialogs | `scripts/e2e/native-dialogs.mjs`  | Chromium có cửa sổ; người thao tác Save As, script kiểm tra history/content/hash        |
+| Release        | `scripts/prepare-release.mjs`     | Source snapshot riêng, frozen install, mọi quality gate, ZIP integrity và build lặp lại |
 
-Các lệnh test có loopback/browser được chạy ngoài sandbox mạng hạn chế, vì lần chạy sandbox trả EACCES khi kết nối server 127.0.0.1. Đây là giới hạn môi trường chạy test; không thay server bằng mock để bỏ qua boundary thật.
+Tất cả `src/core/**/*.ts` thuộc coverage; gate line **≥90%**. Baseline v1: **466/466 tests**, **19 files**, **100% lines (170/170)**, **98,54% branches (271/275)**. Không loại core file, bỏ assertion hoặc quarantine để đạt gate. TEST-ID trong tên test giữ liên hệ với [workingphase](planning/workingphase.md).
 
-### Kết quả và asset
+Chrome E2E phải xác nhận history ID mới, state `complete`, saved path và nội dung/hash. Không dùng `download.saveAs` hoặc move file để tạo kết quả mong muốn. Profile/Downloads mới nằm dưới `.test-artifacts`; `DOWNLOAD_ROUTER_E2E_ARTIFACTS`, nếu đặt, phải trỏ tới thư mục mới trực tiếp dưới một `.test-artifacts`. Giữ đường dẫn ngắn để không thay boundary full path Windows của corpus.
 
-| TEST-ID       | Trạng thái | Asset/test node và bằng chứng                                                                                                                            |
-| ------------- | ---------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| TEST-DR-P0-01 | covered    | scripts/phase0-e2e.mjs: load production, mở options/popup, kiểm tra manifest downloads/storage và không worker/page error                                |
-| TEST-DR-P0-02 | covered    | E2E xác nhận file thật cho matched, no-match và disabled; config-repository.test.ts kiểm tra seed không overwrite; fixture-server.test.js chạy HTTP thật |
-| TEST-DR-P0-03 | covered    | E2E stop worker, quan sát stopped, trigger download, quan sát running và marker global đã mất; report.pdf nằm dưới thư mục rule                          |
-| TEST-DR-P0-04 | covered    | download-handler.test.ts: true đồng bộ, completion đúng một lần trên match/no-match/disabled/lỗi; error log không chứa dữ liệu exception                 |
-| TEST-DR-P0-05 | covered    | download-handler.test.ts: 999/1.000 ms, late resolve/reject, timer clear trên success                                                                    |
-| TEST-DR-P0-06 | covered    | path-builder.test.ts và handler tests: Windows/POSIX basename, Unicode, traversal/absolute/control/reserved names và fallback                            |
-| TEST-DR-P0-07 | covered    | regex.test.ts và E2E production regex.js trong MV3/CSP: syntax, unsupported constructs, biên độ dài và nested quantifier                                 |
+Browser download behavior là `default`; chế độ automation `allow/allowAndName` có thể bỏ qua hook filename. Worker cold start dùng CDP stop và xác nhận `stopped`, đóng extension pages rồi kiểm tra file trước khi mở lại extension API. Không mở worker DevTools window; không coi CDP stop là chờ idle tự nhiên.
 
-Standard runner pnpm test khám phá các test node mang TEST-ID trong tests/unit. Tại thời điểm nghiệm thu có 5 test files, 59 test cases đều pass; các TEST-ID chưa thuộc Phase 0 vẫn missing. Không có test asset bị xóa/quarantine hoặc bị đánh giá duplicate/stale.
+Quota test dùng key filler hoặc intent lớn trong storage của profile dùng riêng; config cũ phải giữ nguyên và tiếp tục route. Lost-response test chỉ điều khiển caller transport sau write thật; UI phải khóa tới explicit reread, không tự retry. File picker dùng `setInputFiles`, cancel-event được dispatch có chủ đích; không gọi đó là thao tác Windows picker.
 
-Evidence E2E được giữ trong docs/evidence/phase0-chromium.json. Report gốc in đường dẫn .test-artifacts của lượt chạy và SHA-256 nội dung file thật. Các lượt thử lỗi trước đó được giữ cục bộ nhưng không được dùng làm bằng chứng covered.
+## Fixture và benchmark
 
-### Kết quả tải thật
+```powershell
+pnpm test:fixtures
+```
 
-| Tình huống                     | File tương đối dưới Downloads của profile thử | Chrome state |
-| ------------------------------ | --------------------------------------------- | ------------ |
-| Matched 127.0.0.1              | DownloadRouterTest/Local/sample.txt           | complete     |
-| No-match localhost             | sample.txt                                    | complete     |
-| Disabled                       | report.pdf                                    | complete     |
-| First download sau worker stop | DownloadRouterTest/Local/report.pdf           | complete     |
+Mở `http://127.0.0.1:8173` bằng profile thử. Direct attachment theo rule mẫu phải nằm trong `Downloads/DownloadRouterTest/Local`; hostname `localhost` không match domain `127.0.0.1`. PDF fixture kiểm tra basename từ Content-Disposition khi URL không có tên. Dừng bằng Ctrl+C. Không dùng tài liệu thật cho overwrite.
 
-### Lệnh đã chạy
+Đo 200 rule riêng, không coverage/profiling:
 
-| Lệnh                                     | Exit code/kết quả                                              |
-| ---------------------------------------- | -------------------------------------------------------------- |
-| pnpm install --frozen-lockfile --offline | 0 sau khi cache/cấu hình store ổn định; lockfile giữ nguyên    |
-| pnpm typecheck                           | 0                                                              |
-| pnpm lint                                | 0                                                              |
-| pnpm test                                | 0; 59/59, 5 files                                              |
-| pnpm test:coverage                       | 0; cùng 59 test cases                                          |
-| pnpm build                               | 0; worker, pages, regex entry, icons và license nằm trong dist |
-| pnpm test:e2e với CHROMIUM_EXECUTABLE    | 0; Chromium 149, native default download behavior              |
+```powershell
+$env:DOWNLOAD_ROUTER_BENCHMARK = '1'
+try { pnpm exec vitest run tests/unit/reliability.test.ts }
+finally { Remove-Item Env:\DOWNLOAD_ROUTER_BENCHMARK }
+```
 
-pnpm format:check đã đạt (exit 0). Lượt chạy pnpm run test --reporter=json --outputFile=docs/evidence/phase0-unit.json cũng đạt (exit 0), lưu 59 test cases và 0 failures. Coverage snapshot nằm trong docs/evidence/phase0-coverage.json. Hash manifest/background/regex của production build được ghi trong evidence Chromium để đối chiếu đúng artifact; source được bàn giao bằng initial commit trên nhánh main.
+Số đo Node ở `.test-artifacts/benchmarks/handler.json`; browser ở `.test-artifacts/benchmarks/chromium.json` và `e2e-report.json`. Node dùng async in-memory storage, không đo Chrome storage latency. Browser đo click tới file đúng nội dung, gồm polling/I/O; không gọi đó là CPU time. Watchdog không ngắt xử lý đồng bộ.
 
-Coverage ở lượt đã đo: lines 100% (19/19), statements 100% (20/20), branches 87,87% (29/33), functions 100% (6/6), scope src/core/**/*.ts. Bốn file core đều có trong coverage-summary.json; không exclude file chưa được test để tăng tỷ lệ. Phase 0 chưa áp dụng gate ≥90% của core đầy đủ Phase 1; kết quả hiện tại không chứng minh matcher/filter còn chưa triển khai.
+## Native prompt và Save As
 
-Nested-quantifier nonmatch trong MV3 hoàn tất ở input 129/1.025/8.192 code units. Thời gian đo cụ thể nằm trong report; không dùng kết quả ba input này để khẳng định benchmark hiệu năng của Phase 5 đã đạt.
+Sau `pnpm build`, chạy `node scripts/e2e/native-dialogs.mjs` với `CHROMIUM_EXECUTABLE`. Helper tạo profile/Downloads riêng và chỉ dùng fixture. Gửi JSON line trong stdin:
 
-### Phát hiện trong quá trình chạy và cách xử lý
+```json
+{ "action": "trigger", "case": "prompt-cancel" }
+```
 
-- pnpm 12 tự install khi store thay đổi, khiến script song song tranh node_modules. Đã chốt store trong workspace và verifyDepsBeforeRun: error; script không được tự sửa dependency trong lúc kiểm tra.
-- Browser.setDownloadBehavior allow khiến download đi thẳng vào thư mục gốc và bỏ qua hook filename. Đã chuyển E2E về default và đặt Downloads bằng Preferences trong profile mới; rerun kiểm chứng file thật đạt.
-- Chromium có thể tái sử dụng worker targetId sau stop. Assertion đã dựa vào trạng thái stopped → running và JS-global marker mất đi; không bỏ điều kiện worker thật bị dừng.
+Người dùng chọn Cancel ở hộp thoại, rồi gửi `{"action":"verify"}`. Lặp với `prompt-choose`, `save-as-choose`, `save-as-cancel`: hai ca chọn tên dùng `prompt-choice.txt`/`user-choice.txt` trong fixture root; hai ca hủy phải đóng hẳn Save As, không xác nhận overwrite. Gửi `{"action":"finish"}` sau đủ bốn ca. `status`/`retry` giữ dialog khi vẫn pending; không suy pass từ lời xác nhận trước khi history/filesystem đạt.
 
-### Giới hạn bằng chứng
+Resume chỉ dùng `NATIVE_RESUME_REPORT` từ report fixture đã kiểm tra, bắt cùng production hash và giữ provenance. Bốn case đã có [bằng chứng lịch sử](evidence/native-dialogs-2026-10-15.json), do người thao tác Windows dialog vì computer-use không đọc được window owner. Đây không phải lần chạy native mới trên build hiện tại.
 
-Đã kiểm chứng trên Chromium 149 headless; chưa kiểm tra giao diện toolbar bằng Chrome cài trên máy, natural idle shutdown, Save As hoặc extension conflict. Regex được chứng minh ở trang MV3 bằng production module, chưa route regex trong worker; đây là công việc Phase 1. Chưa triển khai CRUD, filter, serialized mutation queue, import/export hoặc các phase sau.
+## Release trên Windows
+
+```powershell
+$env:CHROMIUM_EXECUTABLE = 'C:\path\to\chromium\chrome.exe'
+pnpm release:prepare
+```
+
+Script lấy file inventory Git, gồm thay đổi chưa commit, vào source snapshot không có dependency/build/cache/profile. Base commit, source digest và từng source SHA nhận diện chính xác ứng viên; không gọi working tree chưa sạch là clean commit. Snapshot dùng package cache đã chuẩn bị; nếu frozen offline install thiếu cache, chạy install theo lockfile trước, không nới gate.
+
+Quy trình chạy typecheck/lint/format/full coverage/build/browser, rà version/manifest/CSP/permissions/entries/license và production inventory. ZIP được giải nén và so hash với dist đã load; build lần hai phải tái lập mọi production file. Chỉ gói production resources, không source/test/server/profile. ZIP metadata/timestamps không được coi là tái lập bit-for-bit.
+
+Để kiểm tra upgrade, đặt `PREVIOUS_EXTENSION` tới artifact **0.1.0** đã giữ riêng trước khi build v1. Suite tạo rule/settings và backup bằng UI, thay artifact trong cùng đường dẫn/profile, reload và so exact config cùng download thật. Không có artifact cũ thì report ghi `tested: false`; runtime reload 1.0.0 vẫn được kiểm tra. Bật Developer mode đúng README trước reload; Chrome đóng extension tabs nên phải mở Options mới.
+
+Mỗi lượt có `release-report.json`, logs, source snapshot, ZIP và **`verification.json`** trong `.test-artifacts/release-<version>-<timestamp>/`. `verification.json` là bản gọn có thể chia sẻ, không chứa đường dẫn máy; chỉ copy bản pass đã review vào `docs/evidence/v<version>.json`. Raw reports/profiles/logs giữ cục bộ và được Git ignore. Source hash của report nhận diện snapshot tại lúc chạy; thay đổi tài liệu sau đó không được mô tả như đã nằm trong snapshot cũ.
+
+## TEST-ID và giới hạn
+
+| Phase | Yêu cầu được bảo vệ                                                         | TEST-ID  |
+| ----- | --------------------------------------------------------------------------- | -------- |
+| 0     | Chrome feasibility, fallback, watchdog, path và regex                       | P0-01–07 |
+| 1     | Bốn matcher, filter, priority, URL, path, schema                            | P1-01–08 |
+| 2     | Persistence, queue, lifecycle, integration và lỗi storage                   | P2-01–07 |
+| 3     | CRUD, validation, tester, draft, keyboard và list order                     | P3-01–07 |
+| 4     | Popup toggle/count, events, đồng bộ và cold worker                          | P4-01–05 |
+| 5     | Corpus an toàn, conflict, privacy, lỗi và workload 200 rule                 | P5-01–06 |
+| 6     | Canonical roundtrip, strict rejection, preview/cancel/stale/quota           | P6-01–07 |
+| 7     | Production build, UI workflow, reload/upgrade, package và release checklist | P7-01–05 |
+
+Baseline v1 có **52/52 TEST-ID covered trong boundary đã ghi**. P5-06 dùng addon fixture đối chứng: mỗi listener thật gọi `suggest`, hai requested load orders và file complete/content/hash đều được kiểm tra. Không bảo đảm install order, winner hoặc tương thích mọi addon bên thứ ba.
+
+Chưa kiểm chứng: binary Chrome 120, natural idle shutdown, screen reader/WCAG đầy đủ, mọi full path dài, addon thực tế ngoài fixture và native Save As trên build hiện tại. Basename 107 UTF-16 units đã thử không bảo đảm mọi segment 255 units hoặc đường dẫn đầy đủ được OS chấp nhận. Event có thể cũ vì best effort; quota có thể reject JSON hợp lệ. Các giới hạn này không bị ghi covered bởi test pass.

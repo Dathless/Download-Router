@@ -1,5 +1,7 @@
 # Download Router — Implementation Plan
 
+> Kế hoạch triển khai v1 đã hoàn tất. Giữ nội dung gốc để tra cứu yêu cầu và DoD; cấu trúc/hướng dẫn hiện hành ở [README](../../README.md), [ARCHITECTURE](../ARCHITECTURE.md), [TESTING](../TESTING.md). Tên report và đường dẫn sinh trong biên bản cũ là tham chiếu lịch sử; xem [lịch sử bằng chứng](../history/IMPLEMENTATION.md).
+
 ## 1. Project Overview
 
 **Project Name:** Download Router  
@@ -343,12 +345,22 @@ interface DownloadInput {
 ### 7.4 Match Result
 
 ```typescript
-interface MatchResult {
-  matched: boolean;
-  rule?: DownloadRule;
-  matchedUrl?: string;
-}
+type MatchFailureReason =
+  | 'disabled' | 'invalid-input' | 'invalid-url' | 'invalid-rule'
+  | 'extension-filter' | 'mime-filter' | 'url-pattern' | 'regex-input-too-long';
+
+type MatchResult = (
+  | { matched: false; reason: MatchFailureReason }
+  | {
+      matched: true;
+      rule: DownloadRule;
+      matchedUrl: string;
+      conflictAction: ConflictAction;
+    }
+) & { regexInputTooLong?: true };
 ```
+
+`matchedUrl` is the normalized winning candidate. A matched result includes the resolved conflict action. A nonmatch carries an engine reason so the selected-rule tester can explain the failure without duplicating match/filter logic. For a whole list, the last evaluated rule's failure is diagnostic, not a complete per-rule trace; an oversized regex candidate is reported when present. `regexInputTooLong` records that at least one regex candidate exceeded the normalized input limit, even if another candidate or rule matched.
 
 ---
 
@@ -891,6 +903,8 @@ Primary purposes:
 
 Full rule editing should remain on the options page.
 
+Persist at most one local routing proposal under `lastRoutingEvent`, separate from the canonical config: `timestamp`, `ruleId`, Chrome-provided `basename`, and relative `destination`. Do not include URL/query, MIME, or the event in config export. Write this best-effort status only after `suggest` returns; failures must not delay or repeat completion. Disabled/no-match/fallback does not replace the event. The popup must describe it as a proposal, not confirmation of download completion or final saved location.
+
 ---
 
 ## 18. Persistence
@@ -1025,6 +1039,7 @@ Never write imported configuration to storage before validation succeeds.
 - Preview the replacement rule count and changed settings. If the current configuration changed after preview, require a refreshed preview before replacement.
 - Check that preview snapshot inside the mutation queue immediately before committing the import.
 - Commit through the serialized configuration writer in Section 18 with one awaited write. Cancellation, parsing/validation/version errors, and a rejected storage write must not trigger a clear or default reset.
+- Accept JSON files up to 16 MiB, checked before reading/parsing. Export compact canonical JSON so a configuration within the normal 10 MiB storage quota can be backed up and imported within this limit. Imported objects reject unknown fields; export projects only model fields and rejects invalid rules instead of dropping them.
 - Test export/import equivalence, duplicate IDs, unsupported versions, cancellation, stale preview, and write failure. A failed import must leave the previous configuration usable.
 
 ---
@@ -1135,6 +1150,8 @@ ERROR
 ```
 
 An optional in-memory or locally persisted ring buffer may retain approximately 50–100 recent events.
+
+The v1 popup needs only the single proposal described in §17; no ring buffer is required. Keep production diagnostics generic and separate from this status record.
 
 Example:
 
@@ -1574,34 +1591,36 @@ A feature is considered complete only when:
 The initial release is complete when the following are verified:
 
 ```text
-[ ] URL routing
-[ ] Domain matching
-[ ] Prefix matching
-[ ] Glob matching
-[ ] Bounded regex engine, unsupported syntax rejection, and adversarial tests
-[ ] Extension filtering
-[ ] MIME filtering
-[ ] Rule priority and persisted-order ties across original/final URLs
-[ ] Conflict handling
-[ ] Rule CRUD
-[ ] Rule duplication
-[ ] Rule enable/disable
-[ ] Global enable/disable
-[ ] Persistent configuration
-[ ] Shared configuration schema and serialized writes
-[ ] Rule validation
-[ ] Path traversal protection
-[ ] Basename extraction and complete relative-path validation
-[ ] Redirect handling
-[ ] Replace-only import/export, failed-write preservation, and round-trip equivalence
-[ ] Rule tester parity for filename, MIME, and redirect inputs
-[ ] Exactly-once suggest completion, watchdog, and late-result handling
-[ ] First download after worker termination with DevTools closed
-[ ] Core automated tests
-[ ] Manual Chrome integration tests
-[ ] User documentation
-[ ] Architecture documentation
+[x] URL routing
+[x] Domain matching
+[x] Prefix matching
+[x] Glob matching
+[x] Bounded regex engine, unsupported syntax rejection, and adversarial tests
+[x] Extension filtering
+[x] MIME filtering
+[x] Rule priority and persisted-order ties across original/final URLs
+[x] Conflict handling
+[x] Rule CRUD
+[x] Rule duplication
+[x] Rule enable/disable
+[x] Global enable/disable
+[x] Persistent configuration
+[x] Shared configuration schema and serialized writes
+[x] Rule validation
+[x] Path traversal protection
+[x] Basename extraction and complete relative-path validation
+[x] Redirect handling
+[x] Replace-only import/export, failed-write preservation, and round-trip equivalence
+[x] Rule tester parity for filename, MIME, and redirect inputs
+[x] Exactly-once suggest completion, watchdog, and late-result handling
+[x] First download after worker termination with DevTools closed
+[x] Core automated tests
+[x] Manual Chrome integration tests
+[x] User documentation
+[x] Architecture documentation
 ```
+
+Verified 2026-10-15 for local v1.0.0: see docs/TESTING.md Phase 7 for every checklist item's TEST-ID/evidence and docs/evidence/phase7-release.json for the exact uncommitted source snapshot, commands, production/ZIP hashes and 52-ID ledger. Native prompt/Save As evidence is historical Phase 5; current competing-filename tests use a controlled extension fixture. Chrome 120 binary, natural idle, screen reader, arbitrary long paths and real third-party addon compatibility remain unverified. This is not Chrome Web Store publication.
 
 ---
 

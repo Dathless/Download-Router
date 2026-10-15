@@ -1,6 +1,6 @@
 {
   "name": "download-router",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": true,
   "type": "module",
   "packageManager": "pnpm@12.3.4",
@@ -18,7 +18,8 @@
     "build": "vite build",
     "dev": "vite build --watch",
     "test:fixtures": "node scripts/fixture-server.mjs",
-    "test:e2e": "node scripts/phase0-e2e.mjs"
+    "test:e2e": "node scripts/e2e.mjs",
+    "release:prepare": "node scripts/prepare-release.mjs"
   },
   "dependencies": {
     "re2js": "2.8.6"

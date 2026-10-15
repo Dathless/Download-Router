@@ -5,14 +5,304 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Download Router — Cài đặt</title>
   </head>
-  <body>
+  <body class="options-page">
+    <a class="skip-link" href="#rules-heading">Đến danh sách rule</a>
     <main>
-      <h1>Download Router</h1>
-      <p>Phase 0: nền tảng tải xuống đã sẵn sàng.</p>
-      <p>
-        Quản lý rule sẽ có ở Phase 3. Rule mẫu chỉ áp dụng cho 127.0.0.1, lưu
-        vào Downloads/DownloadRouterTest/Local.
+      <header class="page-header">
+        <div>
+          <p class="eyebrow">THƯ MỤC DOWNLOADS · TRÊN MÁY CỦA BẠN</p>
+          <h1>Download Router</h1>
+          <p>Sắp xếp tệp tải xuống bằng các rule URL.</p>
+        </div>
+        <button type="button" id="reload-config">Đọc lại cấu hình</button>
+      </header>
+      <p id="config-status" class="status-banner" role="status">
+        Đang đọc cấu hình…
       </p>
+      <p id="action-status" role="status" aria-live="polite"></p>
+      <p id="save-error" class="field-error" role="alert"></p>
+
+      <section class="card" aria-labelledby="settings-heading">
+        <h2 id="settings-heading">Cài đặt chung</h2>
+        <form id="settings-form">
+          <fieldset id="settings-fields">
+            <legend class="sr-only">Cài đặt định tuyến</legend>
+            <div class="settings-grid">
+              <label class="check"
+                ><input type="checkbox" id="settings-enabled" />Bật định
+                tuyến</label
+              >
+              <label class="check"
+                ><input type="checkbox" id="settings-redirect" />Xét URL sau
+                redirect</label
+              >
+              <div class="field">
+                <label for="settings-conflict">Khi trùng tên tệp</label>
+                <select id="settings-conflict">
+                  <option value="uniquify">Tạo tên khác (uniquify)</option>
+                  <option value="overwrite">Ghi đè (overwrite)</option>
+                  <option value="prompt">Hỏi vị trí lưu (prompt)</option>
+                </select>
+              </div>
+            </div>
+          </fieldset>
+          <div class="actions">
+            <button type="submit" id="save-settings" data-write>
+              Lưu cài đặt
+            </button>
+            <span class="hint"
+              >Thay đổi chỉ áp dụng sau khi lưu. Ghi đè có thể thay thế tệp
+              trùng tên.</span
+            >
+          </div>
+        </form>
+      </section>
+
+      <section class="card" aria-labelledby="rules-heading">
+        <div class="section-header">
+          <h2 id="rules-heading" tabindex="-1">Routing rules</h2>
+          <button type="button" id="add-rule" class="primary" data-write>
+            Thêm rule
+          </button>
+        </div>
+        <p class="hint" id="order-help">
+          Priority cao hơn thắng. Khi hòa priority, rule đứng trước trong danh
+          sách thắng.
+        </p>
+        <p id="empty-state" hidden>
+          Chưa có rule. Chọn “Thêm rule” để bắt đầu.
+        </p>
+        <ol id="rule-list" class="rule-list" aria-describedby="order-help"></ol>
+      </section>
+
+      <section id="editor" class="card" aria-labelledby="editor-heading" hidden>
+        <h2 id="editor-heading">Thêm rule</h2>
+        <div class="editor-grid">
+          <form id="rule-form" novalidate>
+            <p id="form-status" class="field-error" role="alert"></p>
+            <fieldset id="rule-fields">
+              <legend class="sr-only">Nội dung rule</legend>
+              <div class="form-grid">
+                <div class="field span-2">
+                  <label for="rule-name">Tên rule</label
+                  ><input
+                    id="rule-name"
+                    autocomplete="off"
+                    aria-describedby="rule-name-error"
+                  />
+                  <p id="rule-name-error" class="field-error"></p>
+                </div>
+                <div class="field">
+                  <label for="rule-type">Loại matcher</label
+                  ><select id="rule-type" aria-describedby="rule-type-error">
+                    <option value="domain">Domain chính xác</option>
+                    <option value="prefix">URL prefix</option>
+                    <option value="glob">URL glob</option>
+                    <option value="regex">Regex (RE2JS)</option>
+                  </select>
+                  <p id="rule-type-error" class="field-error"></p>
+                </div>
+                <div class="field">
+                  <label for="rule-priority">Priority</label
+                  ><input
+                    id="rule-priority"
+                    type="number"
+                    step="1"
+                    value="0"
+                    aria-describedby="rule-priority-error"
+                  />
+                  <p id="rule-priority-error" class="field-error"></p>
+                </div>
+                <div class="field span-2">
+                  <label for="rule-pattern">Pattern</label
+                  ><input
+                    id="rule-pattern"
+                    spellcheck="false"
+                    autocomplete="off"
+                    aria-describedby="pattern-help rule-pattern-error"
+                  />
+                  <p id="pattern-help" class="hint">
+                    Domain: github.com · Glob: https://*.example.com/files/*.pdf
+                    · Regex tối đa 256 UTF-16 units.
+                  </p>
+                  <p id="rule-pattern-error" class="field-error"></p>
+                </div>
+                <div class="field span-2">
+                  <label for="rule-destination"
+                    >Thư mục đích trong Downloads</label
+                  ><input
+                    id="rule-destination"
+                    placeholder="Development/GitHub"
+                    autocomplete="off"
+                    aria-describedby="destination-help rule-destination-error"
+                  />
+                  <p id="destination-help" class="hint">
+                    Đường dẫn tương đối. Không dùng ../ hoặc đường dẫn ổ đĩa.
+                  </p>
+                  <p id="rule-destination-error" class="field-error"></p>
+                </div>
+                <div class="field">
+                  <label for="rule-extensions">Extension filters</label
+                  ><input
+                    id="rule-extensions"
+                    placeholder="pdf, tar.gz"
+                    aria-describedby="filters-help rule-extensions-error"
+                  />
+                  <p id="rule-extensions-error" class="field-error"></p>
+                </div>
+                <div class="field">
+                  <label for="rule-mimeTypes">MIME filters</label
+                  ><input
+                    id="rule-mimeTypes"
+                    placeholder="application/pdf"
+                    aria-describedby="filters-help rule-mimeTypes-error"
+                  />
+                  <p id="rule-mimeTypes-error" class="field-error"></p>
+                </div>
+                <p id="filters-help" class="hint span-2">
+                  Cách nhau bằng dấu phẩy; để trống nếu không giới hạn.
+                  Extension dựa trên basename Chrome, không dựa trên URL. Các
+                  nhóm filter đều phải đạt.
+                </p>
+                <div class="field span-2">
+                  <label for="rule-conflictAction"
+                    >Conflict action của rule</label
+                  ><select
+                    id="rule-conflictAction"
+                    aria-describedby="rule-conflictAction-error"
+                  >
+                    <option value="">Kế thừa cài đặt chung</option>
+                    <option value="uniquify">Tạo tên khác (uniquify)</option>
+                    <option value="overwrite">Ghi đè (overwrite)</option>
+                    <option value="prompt">Hỏi vị trí lưu (prompt)</option>
+                  </select>
+                  <p id="rule-conflictAction-error" class="field-error"></p>
+                </div>
+                <label class="check span-2"
+                  ><input type="checkbox" id="rule-enabled" checked />Bật rule
+                  này</label
+                >
+              </div>
+            </fieldset>
+            <div class="actions">
+              <button type="submit" id="save-rule" class="primary" data-write>
+                Lưu rule</button
+              ><button type="button" id="cancel-rule">Hủy sửa</button>
+            </div>
+          </form>
+          <section class="tester" aria-labelledby="tester-heading">
+            <h3 id="tester-heading">Thử rule đang sửa</h3>
+            <p class="hint">
+              Chỉ kiểm tra rule này với cài đặt đã lưu, không chọn winner của cả
+              danh sách. Không tải tệp hoặc lưu thay đổi khi thử.
+            </p>
+            <form id="tester-form" novalidate>
+              <fieldset id="tester-fields">
+                <legend class="sr-only">Thông tin download để thử</legend>
+                <div class="field">
+                  <label for="test-url">URL gốc</label
+                  ><input id="test-url" type="url" spellcheck="false" />
+                </div>
+                <div class="field">
+                  <label for="test-finalUrl">URL sau redirect (tùy chọn)</label
+                  ><input id="test-finalUrl" type="url" spellcheck="false" />
+                </div>
+                <div class="field">
+                  <label for="test-filename">Basename Chrome</label
+                  ><input
+                    id="test-filename"
+                    placeholder="report.pdf"
+                    aria-describedby="test-input-help"
+                  />
+                </div>
+                <div class="field">
+                  <label for="test-mime">MIME (tùy chọn)</label
+                  ><input
+                    id="test-mime"
+                    placeholder="application/pdf"
+                    aria-describedby="test-input-help"
+                  />
+                </div>
+                <p id="test-input-help" class="hint">
+                  Cần basename để tính đường dẫn. MIME bắt buộc khi rule có MIME
+                  filter; không đoán metadata từ URL.
+                </p>
+                <button type="submit" id="test-rule">Thử rule</button>
+              </fieldset>
+            </form>
+            <p
+              id="test-result"
+              class="test-result"
+              role="status"
+              aria-live="polite"
+            >
+              Chưa chạy thử.
+            </p>
+          </section>
+        </div>
+      </section>
+      <section class="card" aria-labelledby="backup-heading">
+        <h2 id="backup-heading">Sao lưu và khôi phục</h2>
+        <p class="hint">
+          Bản sao chỉ chứa settings và rules, giữ ID, thời điểm và thứ tự. Không
+          chứa event/log. File JSON tối đa 16 MiB; không merge hoặc đổi version
+          tự động.
+        </p>
+        <button type="button" id="export-config">Xuất JSON</button>
+        <a
+          id="backup-download"
+          download="download-router-config.json"
+          hidden
+        ></a>
+        <div class="field import-file">
+          <label for="import-file">Chọn file cấu hình JSON</label>
+          <input
+            type="file"
+            id="import-file"
+            accept=".json,application/json"
+            aria-describedby="import-help import-error"
+          />
+          <p id="import-help" class="hint">
+            Chọn file chưa ghi gì. Xem trước rồi xác nhận để thay toàn bộ cấu
+            hình đã lưu, kể cả khi cấu hình hiện tại có lỗi.
+          </p>
+        </div>
+        <div class="actions">
+          <button type="button" id="preview-import" disabled>
+            Xem trước thay thế
+          </button>
+          <button type="button" id="cancel-import" disabled>Hủy import</button>
+        </div>
+        <p id="import-status" role="status" aria-live="polite"></p>
+        <p id="import-error" class="field-error" role="alert"></p>
+        <div
+          id="import-preview"
+          class="import-preview"
+          aria-labelledby="import-preview-heading"
+          hidden
+        >
+          <h3 id="import-preview-heading" tabindex="-1">
+            Xác nhận thay thế cấu hình
+          </h3>
+          <p id="import-summary"></p>
+          <ul id="import-settings"></ul>
+          <p id="import-current-warning" class="field-error"></p>
+          <p>
+            <strong>Toàn bộ settings/rules hiện tại sẽ bị thay thế.</strong> Các
+            bản sửa chưa lưu sẽ đóng sau khi import thành công. Hủy sẽ giữ cấu
+            hình và bản nháp hiện tại.
+          </p>
+          <button type="button" id="confirm-import" class="danger" disabled>
+            Xác nhận thay toàn bộ
+          </button>
+        </div>
+      </section>
+      <footer>
+        <p>
+          Chrome có quyền quyết định cuối cùng về tên và vị trí lưu, bao gồm
+          Save As hoặc extension khác.
+        </p>
+      </footer>
     </main>
     <script type="module" src="./index.ts"></script>
   </body>

@@ -36,3 +36,23 @@ export interface DownloadInput {
   filename: string;
   mime: string;
 }
+
+export type MatchFailureReason =
+  | 'disabled'
+  | 'invalid-input'
+  | 'invalid-url'
+  | 'invalid-rule'
+  | 'extension-filter'
+  | 'mime-filter'
+  | 'url-pattern'
+  | 'regex-input-too-long';
+
+export type MatchResult = (
+  | { matched: false; reason: MatchFailureReason }
+  | {
+      matched: true;
+      rule: DownloadRule;
+      matchedUrl: string;
+      conflictAction: ConflictAction;
+    }
+) & { regexInputTooLong?: true };

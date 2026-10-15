@@ -1,0 +1,61 @@
+{
+  "valid": [
+    {
+      "id": "unicode",
+      "filename": "Báo cáo tháng 10 (日本語).txt",
+      "destination": "DownloadRouterTest/Phase5/Báo cáo"
+    },
+    {
+      "id": "compound",
+      "filename": "archive.release.tar.gz",
+      "destination": "DownloadRouterTest\\Phase5\\Paths"
+    },
+    {
+      "id": "encoded",
+      "filename": "literal%2Fname.txt",
+      "destination": "DownloadRouterTest/Phase5/Paths"
+    },
+    {
+      "id": "long",
+      "filename": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.tar.gz",
+      "destination": "DownloadRouterTest/Phase5/Paths"
+    }
+  ],
+  "invalidDestinations": [
+    "C:drive-relative",
+    "\\\\server\\share",
+    "\\\\?\\C:\\outside",
+    "/absolute",
+    "nested/../../outside",
+    "nested\\..\\outside",
+    "nested//empty",
+    "nested/./dot",
+    "ADS:stream",
+    "COM¹.txt",
+    "LPT².log",
+    "NUL .txt",
+    "bad\u0000name",
+    "bad\u001fname",
+    "bad\u0085name",
+    "bad\u009fname",
+    "trailing.",
+    "trailing "
+  ],
+  "invalidBasenames": [
+    "",
+    ".",
+    "..",
+    "folder/name.txt",
+    "folder\\name.txt",
+    "C:relative.txt",
+    "name:stream",
+    "AUX.tar.gz",
+    "COM².pdf",
+    "LPT¹.txt",
+    "bad\u0000name",
+    "bad\rname",
+    "bad\u007fname",
+    "name.",
+    "name "
+  ]
+}

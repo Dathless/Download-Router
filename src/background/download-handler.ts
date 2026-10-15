@@ -1,6 +1,7 @@
 import { buildPath, getBasename } from '../core/path-builder';
 import { matchRule } from '../core/rule-engine';
-import { parseConfig } from '../storage/config-repository';
+import { parseConfig } from '../core/config-validator';
+import type { RoutingEvent } from '../models/routing-event';
 
 export type DownloadDetails = Pick<
   chrome.downloads.DownloadItem,
@@ -10,7 +11,10 @@ export type Suggest = (
   suggestion?: chrome.downloads.FilenameSuggestion,
 ) => void;
 
-export function createDownloadHandler(loadConfig: () => Promise<unknown>) {
+export function createDownloadHandler(
+  loadConfig: () => Promise<unknown>,
+  recordEvent?: (event: RoutingEvent) => Promise<void>,
+) {
   return (item: DownloadDetails, suggest: Suggest): true => {
     let completed = false;
     const complete = (suggestion?: chrome.downloads.FilenameSuggestion) => {
@@ -28,20 +32,37 @@ export function createDownloadHandler(loadConfig: () => Promise<unknown>) {
         const config = parseConfig(rawConfig);
         if (!config.settings.enabled) return complete();
         const input = { ...item, filename: getBasename(item.filename) };
-        const rule = matchRule(input, config);
-        const filename = rule
-          ? buildPath(rule.destination, input.filename)
+        const result = matchRule(input, config);
+        const filename = result.matched
+          ? buildPath(result.rule.destination, input.filename)
           : null;
-        if (!rule || !filename) return complete();
+        if (!result.matched || !filename) return complete();
         complete({
           filename,
-          conflictAction:
-            rule.conflictAction ?? config.settings.defaultConflictAction,
+          conflictAction: result.conflictAction,
         });
+        if (recordEvent) {
+          const event: RoutingEvent = {
+            timestamp: Date.now(),
+            ruleId: result.rule.id,
+            basename: input.filename,
+            destination: result.rule.destination.replaceAll('\\', '/'),
+          };
+          // Status is best effort and starts only after suggest has returned.
+          void Promise.resolve()
+            .then(() => recordEvent(event))
+            .catch(() => {});
+        }
       })
       .catch(() => {
         complete();
-        console.warn('Download Router: routing failed; using Chrome defaults.');
+        try {
+          console.warn(
+            'Download Router: routing failed; using Chrome defaults.',
+          );
+        } catch {
+          /* Diagnostics must not reject the event handler. */
+        }
       });
     return true;
   };

@@ -1,14 +1,16 @@
 # Download Router — Các giai đoạn triển khai
 
+> Kế hoạch triển khai v1 đã hoàn tất. Giữ nội dung gốc để tra cứu yêu cầu và DoD; cấu trúc/hướng dẫn hiện hành ở [README](../../README.md), [ARCHITECTURE](../ARCHITECTURE.md), [TESTING](../TESTING.md). Tên report và đường dẫn sinh trong biên bản cũ là tham chiếu lịch sử; xem [lịch sử bằng chứng](../history/IMPLEMENTATION.md).
+
 Ngày lập: 2026-10-15. Phạm vi: v1.0.0, extension dùng cá nhân trên Chrome/Chromium.
 
-Tài liệu này chuyển [PLAN.md](D:/LocalProject/ChromeExtension/DownloadRouter/PLAN.md) thành công việc có thể triển khai và nghiệm thu. PLAN.md là nguồn quyết định về chức năng, mô hình dữ liệu và kiến trúc; tài liệu này quy định thứ tự, đầu ra và bằng chứng hoàn thành. Khi đổi hành vi hoặc phạm vi, cập nhật PLAN.md trước rồi đồng bộ các phase và TEST-ID bị ảnh hưởng.
+Tài liệu này chuyển [PLAN.md](PLAN.md) thành công việc có thể triển khai và nghiệm thu. PLAN.md là nguồn quyết định về chức năng, mô hình dữ liệu và kiến trúc; tài liệu này quy định thứ tự, đầu ra và bằng chứng hoàn thành. Khi đổi hành vi hoặc phạm vi, cập nhật PLAN.md trước rồi đồng bộ các phase và TEST-ID bị ảnh hưởng.
 
 Hiện trạng khi lập: chỉ có PLAN.md; chưa có mã nguồn, package.json, Git repository hoặc bộ kiểm thử. Việc tạo tài liệu này không có nghĩa là đã thực hiện Phase 0.
 
 Danh mục ban đầu: 52 hạng mục kiểm thử bắt buộc, tất cả missing; 0 test asset hiện hữu, 0 covered, chưa có asset nghi trùng hoặc lỗi thời. Các ca hồi quy tham chiếu lại TEST-ID cũ, không cộng thành test asset mới.
 
-Cập nhật nghiệm thu 2026-10-15: Phase 0 done; TEST-DR-P0-01–07 covered, 45 TEST-ID còn lại missing. Có 5 test files tự động và script E2E Chrome/filesystem thật. Bằng chứng và trạng thái chi tiết: [docs/TESTING.md](D:/LocalProject/ChromeExtension/DownloadRouter/docs/TESTING.md). Chưa bắt đầu Phase 1.
+Cập nhật nghiệm thu 2026-10-15: Phase 0–7 done, **52/52 TEST-ID covered** trong boundary đã ghi; không còn TEST-ID missing/unverified. P5-06 được bổ sung kiểm tra hai extension đối chứng ở Phase 7; không suy ra tương thích mọi addon. Có 19 test files, 466 test cases, E2E Chrome/filesystem thật, upgrade 0.1.0→1.0.0, import hai profile và bằng chứng native dialog lịch sử Phase 5. Core lines 100%, branches 98,54%. V1.0.0 có ZIP/SHA-256, source snapshot riêng và build lặp lại khớp hash. Bằng chứng/giới hạn: [docs/TESTING.md](../TESTING.md).
 
 ## 1. Quy tắc thực hiện và nghiệm thu
 
@@ -51,13 +53,13 @@ Mọi TEST-ID trong tài liệu này khởi tạo ở trạng thái **missing**,
 | Phase | Mục tiêu | Kết quả bàn giao chính | Phụ thuộc | Trạng thái ban đầu |
 |---|---|---|---|---|
 | 0 | Chứng minh nền tảng Chrome và regex khả thi | Build load được, một domain rule tải thật, handler fail-safe, quyết định engine | PLAN.md đã chốt | done |
-| 1 | Hoàn thiện core | Model/validator, 4 matcher, filter, priority, URL và path; core coverage ≥ 90% | Phase 0 done | not_started |
-| 2 | Tích hợp đầy đủ và bảo vệ dữ liệu | MVP dùng cấu hình lưu bền; ghi tuần tự; worker khởi động lại vẫn hoạt động | Phase 1 done | not_started |
-| 3 | Quản lý rule và settings | Options UI, CRUD, validation, rule tester dùng chung pipeline | Phase 2 done | not_started |
-| 4 | Thao tác nhanh | Popup toggle, số rule, sự kiện routing gần nhất, mở options | Phase 3 done | not_started |
-| 5 | Hồi quy và hardening | Bằng chứng path security, lỗi storage, regex, lifecycle, conflict và quyền riêng tư | Phase 4 done | not_started |
-| 6 | Sao lưu và khôi phục | Export/import thay thế an toàn, bảo toàn thứ tự và hành vi | Phase 5 done | not_started |
-| 7 | Chuẩn bị phát hành | Production artifact, tài liệu, toàn bộ release checklist có bằng chứng | Phase 6 done | not_started |
+| 1 | Hoàn thiện core | Model/validator, 4 matcher, filter, priority, URL và path; core coverage ≥ 90% | Phase 0 done | done |
+| 2 | Tích hợp đầy đủ và bảo vệ dữ liệu | MVP dùng cấu hình lưu bền; ghi tuần tự; worker khởi động lại vẫn hoạt động | Phase 1 done | done |
+| 3 | Quản lý rule và settings | Options UI, CRUD, validation, rule tester dùng chung pipeline | Phase 2 done | done |
+| 4 | Thao tác nhanh | Popup toggle, số rule, sự kiện routing gần nhất, mở options | Phase 3 done | done |
+| 5 | Hồi quy và hardening | Bằng chứng path security, lỗi storage, regex, lifecycle, conflict và quyền riêng tư | Phase 4 done | done |
+| 6 | Sao lưu và khôi phục | Export/import thay thế an toàn, bảo toàn thứ tự và hành vi | Phase 5 done | done |
+| 7 | Chuẩn bị phát hành | Production artifact, tài liệu, toàn bộ release checklist có bằng chứng | Phase 6 done | done |
 
 ### 2.1. Điểm vào kiểm tra cần cung cấp ở Phase 0
 
@@ -92,7 +94,7 @@ Tài liệu này là danh mục TEST-ID ban đầu; chưa cần thêm TESTS.md t
 
 ## Phase 0 — Foundation and Chrome Feasibility
 
-Nguồn: [PLAN §26 — Phase 0](D:/LocalProject/ChromeExtension/DownloadRouter/PLAN.md#26-development-phases), [§11 — Download Processing](D:/LocalProject/ChromeExtension/DownloadRouter/PLAN.md#11-download-processing), [§8.4 — Regex](D:/LocalProject/ChromeExtension/DownloadRouter/PLAN.md#84-regular-expression-matching).
+Nguồn: [PLAN §26 — Phase 0](PLAN.md#26-development-phases), [§11 — Download Processing](PLAN.md#11-download-processing), [§8.4 — Regex](PLAN.md#84-regular-expression-matching).
 
 ### Điều kiện bắt đầu
 
@@ -138,7 +140,7 @@ Asset cho P0-04–06: download-handler.test.ts và path adapter tests; P0-07: re
 
 ## Phase 1 — Core Domain and Rule Engine
 
-Nguồn: [PLAN §7–10 — Model và matching](D:/LocalProject/ChromeExtension/DownloadRouter/PLAN.md#7-domain-model), [§12–13 — Path và filename](D:/LocalProject/ChromeExtension/DownloadRouter/PLAN.md#12-destination-handling), [§24 — Testing](D:/LocalProject/ChromeExtension/DownloadRouter/PLAN.md#24-testing-strategy).
+Nguồn: [PLAN §7–10 — Model và matching](PLAN.md#7-domain-model), [§12–13 — Path và filename](PLAN.md#12-destination-handling), [§24 — Testing](PLAN.md#24-testing-strategy).
 
 ### Điều kiện bắt đầu
 
@@ -178,14 +180,14 @@ Asset dự kiến: P1-01/03/04/05 trong rule-matcher.test.ts, P1-02 trong url-no
 
 ### DoD và điều kiện chuyển phase
 
-- [ ] DoD chung đạt; toàn bộ P1-01–08 covered và chạy lại P0-04–07 bị tác động.
-- [ ] Line coverage core ≥ 90%, tính toàn bộ module core kể cả file chưa được import bởi test; báo cáo thêm branch/function coverage để thấy nhánh còn thiếu. Không tăng số bằng cách bỏ file khó test hoặc tính UI thay core; các ca hành vi bắt buộc vẫn phải đạt dù đã đủ tỷ lệ.
-- [ ] Core chạy độc lập Chrome/DOM; rule tester về sau có thể import cùng pipeline.
-- [ ] Hòa priority, URL candidates, filename và regex boundary đã có assertion kết quả, không chỉ assertion gọi hàm.
+- [x] DoD chung đạt; toàn bộ P1-01–08 covered và chạy lại P0-04–07 bị tác động. Xem biên bản Phase 1 trong docs/TESTING.md.
+- [x] Line coverage core ≥ 90%, tính toàn bộ module core kể cả file chưa được import bởi test; báo cáo thêm branch/function coverage để thấy nhánh còn thiếu. Kết quả: lines/statements/functions 100%, branches 98,82%; gate lines 90% được thực thi bằng Vitest.
+- [x] Core chạy độc lập Chrome/DOM; rule tester về sau có thể import cùng pipeline.
+- [x] Hòa priority, URL candidates, filename và regex boundary đã có assertion kết quả, không chỉ assertion gọi hàm.
 
 ## Phase 2 — Full Chrome Integration and Reliability
 
-Nguồn: [PLAN §11 — Handler](D:/LocalProject/ChromeExtension/DownloadRouter/PLAN.md#11-download-processing), [§18–19 — Persistence](D:/LocalProject/ChromeExtension/DownloadRouter/PLAN.md#18-persistence), [§22 — Error handling](D:/LocalProject/ChromeExtension/DownloadRouter/PLAN.md#22-error-handling).
+Nguồn: [PLAN §11 — Handler](PLAN.md#11-download-processing), [§18–19 — Persistence](PLAN.md#18-persistence), [§22 — Error handling](PLAN.md#22-error-handling).
 
 ### Điều kiện bắt đầu
 
@@ -222,14 +224,14 @@ Asset dự kiến: P2-01–04 trong config-repository.test.ts và handler integr
 
 ### DoD và điều kiện chuyển phase
 
-- [ ] DoD chung đạt; P2-01–07 covered, cold-worker và persistence có bằng chứng thật.
-- [ ] Đủ bằng chứng một snapshot/download, mutation tuần tự, lỗi ghi không xóa dữ liệu và queue phục hồi.
-- [ ] Mọi nhánh handler và race với watchdog vẫn hoàn tất đúng một lần.
-- [ ] Đây là MVP kỹ thuật. Chưa gọi hoàn thành trải nghiệm sử dụng khi quản lý rule vẫn cần fixture/JSON.
+- [x] DoD chung đạt; P2-01–07 covered, cold-worker và persistence có bằng chứng thật. Xem biên bản Phase 2 trong docs/TESTING.md.
+- [x] Đủ bằng chứng một snapshot/download, mutation tuần tự, lỗi ghi không xóa dữ liệu và queue phục hồi; có cả quota rejection thật trong Chromium.
+- [x] Mọi nhánh handler và race với watchdog vẫn hoàn tất đúng một lần; hồi quy full suite 302/302 đạt.
+- [x] Đây là MVP kỹ thuật. Chưa gọi hoàn thành trải nghiệm sử dụng khi quản lý rule vẫn cần fixture/JSON.
 
 ## Phase 3 — Rule Management UI
 
-Nguồn: [PLAN §15–16 — Options và tester](D:/LocalProject/ChromeExtension/DownloadRouter/PLAN.md#15-options-page), [§7 — Model](D:/LocalProject/ChromeExtension/DownloadRouter/PLAN.md#7-domain-model), [§18 — Mutation](D:/LocalProject/ChromeExtension/DownloadRouter/PLAN.md#18-persistence).
+Nguồn: [PLAN §15–16 — Options và tester](PLAN.md#15-options-page), [§7 — Model](PLAN.md#7-domain-model), [§18 — Mutation](PLAN.md#18-persistence).
 
 ### Điều kiện bắt đầu
 
@@ -267,14 +269,16 @@ Asset dự kiến: tests/unit/rule-tester.test.ts, options integration suite n�
 
 ### DoD và điều kiện chuyển phase
 
-- [ ] DoD chung đạt; P3-01–07 covered; các mutation dùng writer Phase 2.
-- [ ] Toàn bộ CRUD/settings dùng được qua UI; không cần sửa storage thủ công.
-- [ ] Tester parity có assertion tự động; keyboard, render dữ liệu và tải theo rule mới có kiểm tra Chrome thật.
-- [ ] Hiển thị rõ việc list order phân xử hòa priority; core coverage không bị giảm bởi thêm UI.
+- [x] DoD chung đạt; P3-01–07 covered; các mutation dùng writer Phase 2.
+- [x] Toàn bộ CRUD/settings dùng được qua UI; không cần sửa storage thủ công.
+- [x] Tester parity có assertion tự động; keyboard, render dữ liệu và tải theo rule mới có kiểm tra Chrome thật.
+- [x] Hiển thị rõ việc list order phân xử hòa priority; core coverage không bị giảm bởi thêm UI.
+
+Nghiệm thu 2026-10-15: 331/331 tests, 15 files; core lines 100%, branches 98,27%; Chromium 149 headless đạt CRUD/settings, tester, quota rejection, double submit, keyboard và conflict trên file thật. Review Phase 2 không có lỗi production chặn chuyển phase; helper E2E được sửa để yêu cầu download ID mới khi overwrite. Evidence và giới hạn: docs/TESTING.md, docs/evidence/phase3-*.json.
 
 ## Phase 4 — Popup and User Experience
 
-Nguồn: [PLAN §17 — Popup](D:/LocalProject/ChromeExtension/DownloadRouter/PLAN.md#17-popup), [§18 — Persistence](D:/LocalProject/ChromeExtension/DownloadRouter/PLAN.md#18-persistence), [§23 — Logging](D:/LocalProject/ChromeExtension/DownloadRouter/PLAN.md#23-logging).
+Nguồn: [PLAN §17 — Popup](PLAN.md#17-popup), [§18 — Persistence](PLAN.md#18-persistence), [§23 — Logging](PLAN.md#23-logging).
 
 ### Điều kiện bắt đầu
 
@@ -308,13 +312,15 @@ Asset dự kiến: popup integration suite và event tests cạnh download-handl
 
 ### DoD và điều kiện chuyển phase
 
-- [ ] DoD chung đạt; P4-01–05 covered; không thêm permission hoặc framework.
-- [ ] Popup/Options đồng bộ sau thao tác đã ghi; lỗi trạng thái không cản tải.
-- [ ] Event tối thiểu tách cấu hình, không chứa full URL và không khẳng định tải thành công.
+- [x] DoD chung đạt; P4-01–05 covered; không thêm permission hoặc framework.
+- [x] Popup/Options đồng bộ sau thao tác đã ghi; lỗi trạng thái không cản tải.
+- [x] Event tối thiểu tách cấu hình, không chứa full URL và không khẳng định tải thành công.
+
+Nghiệm thu 2026-10-15: 358/358 tests, 17 files; core lines 100%, branches 98,27%. Chromium 149 headless đạt popup document và action popup thật qua API/CDP, toggle/count/sync, quota rejection thật, keyboard/focus và popup wake worker đã dừng. Event chỉ bốn field, ghi sau suggest, pending/lỗi không giữ handler. Evidence và giới hạn: docs/TESTING.md, docs/evidence/phase4-*.json.
 
 ## Phase 5 — Reliability Regression and Hardening
 
-Nguồn: [PLAN §12–14 — Path/conflict](D:/LocalProject/ChromeExtension/DownloadRouter/PLAN.md#12-destination-handling), [§21–25 — Security và testing](D:/LocalProject/ChromeExtension/DownloadRouter/PLAN.md#21-security-requirements), [§29 — Risks](D:/LocalProject/ChromeExtension/DownloadRouter/PLAN.md#29-risks-and-mitigations).
+Nguồn: [PLAN §12–14 — Path/conflict](PLAN.md#12-destination-handling), [§21–25 — Security và testing](PLAN.md#21-security-requirements), [§29 — Risks](PLAN.md#29-risks-and-mitigations).
 
 ### Điều kiện bắt đầu
 
@@ -351,15 +357,17 @@ Asset: mở rộng path/regex/repository tests đã có; thêm suite integration
 
 ### DoD và điều kiện chuyển phase
 
-- [ ] DoD chung đạt; P5-01–05 covered và hồi quy liên quan đạt trên revision hiện tại.
-- [ ] P5-06 có bằng chứng hoặc manual exit rõ giới hạn chưa xác minh, cách kiểm tra và nơi tài liệu hóa; không ghi covered cho nhánh chưa chạy.
-- [ ] Có kiểm tra Chrome/filesystem thật cho conflict và basename; coverage không thay cho việc này.
-- [ ] Mỗi lỗi mới có ca hồi quy; không còn lỗi gây mất dữ liệu, treo download hoặc định tuyến sai chưa xử lý.
-- [ ] Báo cáo hiệu năng có số đo, không chỉ ghi “nhanh”; nếu workload đại diện liên tục timeout thì chưa done.
+- [x] DoD chung đạt; P5-01–05 covered và hồi quy liên quan đạt trên revision hiện tại.
+- [x] P5-06 có bằng chứng hoặc manual exit rõ giới hạn chưa xác minh, cách kiểm tra và nơi tài liệu hóa; không ghi covered cho nhánh chưa chạy.
+- [x] Có kiểm tra Chrome/filesystem thật cho conflict và basename; coverage không thay cho việc này.
+- [x] Mỗi lỗi mới có ca hồi quy; không còn lỗi gây mất dữ liệu, treo download hoặc định tuyến sai chưa xử lý.
+- [x] Báo cáo hiệu năng có số đo, không chỉ ghi “nhanh”; nếu workload đại diện liên tục timeout thì chưa done.
+
+Nghiệm thu 2026-10-15: 401/401 tests, 18 files; core lines 100%, branches 98,27%. Chromium 149 đạt regression Phase 0–5, corpus basename và uniquify/overwrite nội dung khác nhau. Bốn ca prompt/Save As do người dùng thao tác, script kiểm chứng history/content/hash và Cancel trả USER_CANCELED. 200-rule Node warm p95 6,56 ms (mixed) / 272,73 ms (200 adversarial regex); Chromium 5 cold + 20 warm đúng đích, không watchdog fallback. Logger throw được cô lập và có ca hồi quy. P5-06 vẫn unverified với manual exit cho extension khác; không coi đó là covered. Evidence: docs/TESTING.md, docs/evidence/phase5-*.json, .test-artifacts/benchmarks/phase5-*.json.
 
 ## Phase 6 — Configuration Portability
 
-Nguồn: [PLAN §18–20 — Cấu hình và import/export](D:/LocalProject/ChromeExtension/DownloadRouter/PLAN.md#18-persistence), [§9 — Thứ tự rule](D:/LocalProject/ChromeExtension/DownloadRouter/PLAN.md#9-matching-pipeline).
+Nguồn: [PLAN §18–20 — Cấu hình và import/export](PLAN.md#18-persistence), [§9 — Thứ tự rule](PLAN.md#9-matching-pipeline).
 
 ### Điều kiện bắt đầu
 
@@ -368,7 +376,7 @@ Phase 5 done; writer tuần tự, schema và dữ liệu hiện hành có test b
 ### Công việc và yêu cầu chi tiết
 
 1. Export trực tiếp canonical ExtensionConfig với root configVersion: 1. Không thêm version thứ hai, metadata envelope, event/log hoặc dữ liệu browsing. Dùng một snapshot nhất quán cho mỗi export.
-2. Import JSON qua schema và rule validator dùng chung: kiểm tra settings, version, mọi rule, ID không rỗng/không trùng, pattern/regex limit, destination, priority, timestamp và enum. Bất kỳ entry sai thì reject toàn bộ import, khác chính sách bỏ qua rule hỏng khi runtime load.
+2. Import JSON tối đa 16 MiB UTF-8, kiểm tra File.size trước đọc và byte size trước parse. Qua schema và rule validator dùng chung: kiểm tra settings, version, mọi rule, ID không rỗng/không trùng, pattern/regex limit, destination, priority, timestamp và enum; reject field lạ. Bất kỳ entry sai thì reject toàn bộ import, khác chính sách bỏ qua rule hỏng khi runtime load.
 3. Import v1 là thay thế toàn bộ settings/rules sau preview và xác nhận rõ. Preview thể hiện số rule sẽ thay và setting thay đổi; cancel không ghi gì. Không merge, không tự sửa version hoặc migrate format chưa hỗ trợ.
 4. Giữ nguyên rule ID, timestamp và array order. Config export/import phải cho cùng quyết định routing, gồm tie-break và conflict inheritance.
 5. Khi confirm, đưa kiểm tra snapshot preview và thao tác ghi vào cùng hàng đợi mutation. Nếu config đã đổi, yêu cầu preview mới; không dùng lần kiểm tra bên ngoài queue làm bảo đảm duy nhất.
@@ -393,18 +401,20 @@ Phase 5 done; writer tuần tự, schema và dữ liệu hiện hành có test b
 | TEST-DR-P6-06 | integration/I | §18, §20 | Storage set reject khi import đã confirm | UI báo lỗi; old config usable; không clear/reset, không thông báo thành công |
 | TEST-DR-P6-07 | E2E/E | §20, §25 | Export từ UI, sửa config thử, import replacement; tải lại; lặp trên profile thử sạch | Khôi phục chính xác, options/popup đồng bộ và file thật đi theo rule đã khôi phục |
 
-Asset: P6-01–03 trong import-export.test.ts và config contract suite; P6-04–06 trong import/repository integration suite; P6-04/07 có Chrome thật. Chạy lại P1-06/08, P2-04/05, P3-05 và P4-01/02 khi tích hợp import.
+Asset: P6-01–06 trong tests/unit/import-export.test.ts (core, message, repository integration cùng Chrome mock boundary); fixture tests/fixtures/portable-config.json. scripts/import-export-e2e.mjs kiểm tra P6-01–07 trên Chrome thật và filesystem, gồm profile sạch. Đã chạy lại P1-06/08, P2-04/05, P3-05 và P4-01/02 trong full regression.
 
 ### DoD và điều kiện chuyển phase
 
-- [ ] DoD chung đạt; P6-01–07 covered, gồm biên bản export/import UI thật.
-- [ ] Round-trip được kiểm tra cả shape dữ liệu và quyết định routing; không chỉ so số rule.
-- [ ] Preview/cancel/stale-preview/write failure không làm mất dữ liệu cũ.
-- [ ] Không export event/log, không merge hoặc migration giả định; docs khớp chính sách thay thế v1.
+- [x] DoD chung đạt; P6-01–07 covered, gồm biên bản export/import UI thật.
+- [x] Round-trip được kiểm tra cả shape dữ liệu và quyết định routing; không chỉ so số rule.
+- [x] Preview/cancel/stale-preview/write failure không làm mất dữ liệu cũ.
+- [x] Không export event/log, không merge hoặc migration giả định; docs khớp chính sách thay thế v1.
+
+Nghiệm thu 2026-10-15: 466/466 tests, 19 files; core lines 100%, branches 98,54%. Chromium 149 đạt regression Phase 0–6, export JSON thật, cancel không đổi hành vi tải, actual quota rejection giữ config usable và explicit retry thành công; mất reply sau commit không tự retry. Backup khôi phục exact settings/ID/timestamps/order và tải thật trong profile hiện hữu lẫn mới; popup đồng bộ. Preview SHA-256 được kiểm tra trong shared queue sau writer đang pending. Evidence docs/evidence/phase6-*.json và biên bản docs/TESTING.md. P5-06 giữ manual exit/unverified; Phase 7 chưa thực hiện.
 
 ## Phase 7 — Release Preparation
 
-Nguồn: [PLAN §26 — Phase 7](D:/LocalProject/ChromeExtension/DownloadRouter/PLAN.md#26-development-phases), [§28 — Definition of Done](D:/LocalProject/ChromeExtension/DownloadRouter/PLAN.md#28-definition-of-done), [§29 — Risks](D:/LocalProject/ChromeExtension/DownloadRouter/PLAN.md#29-risks-and-mitigations).
+Nguồn: [PLAN §26 — Phase 7](PLAN.md#26-development-phases), [§28 — Definition of Done](PLAN.md#28-definition-of-done), [§29 — Risks](PLAN.md#29-risks-and-mitigations).
 
 ### Điều kiện bắt đầu
 
@@ -412,7 +422,7 @@ Phase 0–6 done, các manual exit được ghi rõ. Có revision ứng viên ph
 
 ### Công việc và yêu cầu chi tiết
 
-1. Từ checkout sạch ở revision ứng viên, cài theo lockfile, chạy toàn bộ quality commands và build production. Không nghiệm thu dựa vào dist cũ hoặc file sửa tay sau build.
+1. Từ checkout sạch ở revision ứng viên, cài theo lockfile, chạy toàn bộ quality commands và build production. Khi chưa được yêu cầu commit, dùng source snapshot riêng không chứa build/dependency/cache, lưu danh sách SHA-256 và base commit để xác định đúng revision chưa commit. Không nghiệm thu dựa vào dist cũ hoặc file sửa tay sau build.
 2. Load đúng artifact production vào profile mới; thực hiện luồng tạo rule → download → worker cold start → toggle → export/import → download lại. Đối chiếu actual saved path/content bằng fixture thật.
 3. Kiểm tra upgrade/reload extension ở profile thử đã có dữ liệu: rule/settings không reset, schema được bảo toàn. Backup config trước khi thử; không kiểm tra bằng dữ liệu thật.
 4. Hoàn thiện README, docs/ARCHITECTURE.md, docs/RULES.md, docs/TESTING.md và CHANGELOG.md: cài/reload, cấu hình, giới hạn Downloads, cú pháp regex được chọn, Save As/extension conflict, backup/restore và cách chạy test.
@@ -439,11 +449,13 @@ Asset: standard suite đã có; không thêm một suite test trùng toàn bộ 
 
 ### DoD và điều kiện phát hành
 
-- [ ] DoD chung và toàn bộ checklist v1 trong PLAN §28 đạt trên artifact ứng viên.
-- [ ] P7-01–05 covered; regression của các module bị sửa sau Phase 6 đã chạy lại.
-- [ ] Người dùng cài và quản lý rule/backup bằng UI theo tài liệu; không cần môi trường phát triển để extension hoạt động sau build.
-- [ ] Không còn lỗi có thể gây mất dữ liệu, chặn download, path không an toàn hoặc routing trái đặc tả; giới hạn platform được ghi rõ.
-- [ ] Revision, artifact, kết quả kiểm thử, dependency decision và known limitations đã liên kết được với nhau. Việc upload/publish là bước riêng nếu sau này được yêu cầu.
+- [x] DoD chung và toàn bộ checklist v1 trong PLAN §28 đạt trên artifact ứng viên.
+- [x] P7-01–05 covered; regression của các module bị sửa sau Phase 6 đã chạy lại.
+- [x] Người dùng cài và quản lý rule/backup bằng UI theo tài liệu; không cần môi trường phát triển để extension hoạt động sau build.
+- [x] Không còn lỗi có thể gây mất dữ liệu, chặn download, path không an toàn hoặc routing trái đặc tả; giới hạn platform được ghi rõ.
+- [x] Revision, artifact, kết quả kiểm thử, dependency decision và known limitations đã liên kết được với nhau. Việc upload/publish là bước riêng nếu sau này được yêu cầu.
+
+Nghiệm thu 2026-10-15: v1.0.0; `pnpm release:prepare` exit 0 từ source snapshot sạch được định danh bằng base commit + source SHA-256, không tự commit working tree. Frozen install/lockfile unchanged, typecheck/lint/format/466 tests/coverage/build/Chromium Phase 0–7 đều đạt. UI workflow, reload và nâng cấp artifact 0.1.0 trong cùng profile bảo toàn exact config và actual download. P5-06 có baseline và hai lượt concurrent suggest bằng addon fixture thật, không hứa winner. ZIP chỉ production files, giải nén khớp hash; build lần hai tái lập đúng mọi file. Evidence `docs/evidence/phase7-*.json`; packagePath/hash và source provenance ở phase7-release.json. Giới hạn: Chrome 120 binary, natural idle, screen reader, mọi path dài, addon bên thứ ba thực tế và native Save As trên 1.0.0 chưa thử; bằng chứng native Phase 5 được giữ lịch sử. Không publish/tag/push.
 
 ## 3. Mẫu biên bản bàn giao một phase
 
@@ -479,4 +491,4 @@ Ghi trong docs/TESTING.md khi bắt đầu có triển khai; có thể dùng m�
 
 Khi bắt đầu phase, đổi đúng một dòng trong bảng tiến độ thành in_progress. Khi thêm test, cập nhật ánh xạ asset và trạng thái TEST-ID trong biên bản; không đổi toàn bộ test sang covered theo trạng thái phase. Khi hoàn tất, đính kèm biên bản có bằng chứng và kiểm lại DoD trước khi đổi done. Nếu thay đổi một hợp đồng đã nghiệm thu, chạy lại TEST-ID bị tác động ở các phase sau và cập nhật bằng chứng cho revision mới.
 
-Tại thời điểm tạo tài liệu chưa có phase nào được nghiệm thu. Cập nhật 2026-10-15: Phase 0 đã hoàn tất với bằng chứng Chromium 149 headless và test tự động; bước tiếp theo là Phase 1, hiện chưa bắt đầu. Các giới hạn bằng chứng và môi trường đã thử được ghi trong docs/TESTING.md.
+Tại thời điểm tạo tài liệu chưa có phase nào được nghiệm thu. Cập nhật cuối 2026-10-15: Phase 0–7 hoàn tất cho v1.0.0 dùng cá nhân/load unpacked; 52/52 TEST-ID covered trong boundary nêu rõ, 466 tests, core lines 100%, release ZIP và source/build hashes có bằng chứng. P5-06 trước đây manual exit được bổ sung fixture concurrent-extension thật ở Phase 7; native dialog Phase 5 không bị đổi provenance thành lần chạy mới. Các giới hạn môi trường và khả năng chưa kiểm chứng nằm trong docs/TESTING.md. Publish hay chức năng v2 là công việc riêng khi được yêu cầu.

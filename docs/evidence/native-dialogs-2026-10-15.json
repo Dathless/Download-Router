@@ -1,0 +1,104 @@
+{
+  "status": "historical-pass",
+  "date": "2026-10-15",
+  "testIds": ["TEST-DR-P5-02", "TEST-DR-P5-06"],
+  "version": "0.1.0",
+  "browser": "149.0.7827.55",
+  "platform": "win32",
+  "humanAssisted": true,
+  "boundary": "Human-operated Windows dialogs; Chrome history/content/hash verification. Not rerun on the current build.",
+  "rawEvidenceSha256": "036598867b1ce1252c4fe887c7ffdd0944252b66d59a7705c58a7db032ad9e73",
+  "distSha256": {
+    "RE2JS-LICENSE.txt": "b80a94f2c3c0b8bd6af849511cef624ad9feecbc0151d08bacad86ebab4cb46e",
+    "assets/config-client-DbIVMm8U.js": "0ea1b46ba3b02218a22fd15fa0e7702be76d74da2f0fb985c254bf6761e4673a",
+    "assets/config-client-DtBPKrC3.css": "655432d4d5979417494e84425792eb618d472ae939a8344dcecdce83799f39f5",
+    "assets/config-validator-BRy1PNqK.js": "5182a368228a817ee682bb3de9b061779d030804c06557fe40067cd76f264c03",
+    "assets/options-BqZaqRBO.css": "1317a84b48418272172c5be995de233b92080b52410e6c31d1a392dd13c3e62d",
+    "assets/popup-R7LRsQ2u.css": "49f5ae66e7048b253c9eb388660d7b2bbe5fac22e71bcf4faa6dc3b20cc696b9",
+    "assets/regex-CSUn3emm.js": "7212a3cc9df6dea7964c3350685289576c61ffa1aa4e12a4b1bea5cd1efa6de1",
+    "assets/routing-event-lahPeldl.js": "4af7b7d0aaf53337971061b764bd35035f43113a86759f3b9866c48fb5d8545c",
+    "assets/rule-engine-DPQOyJkk.js": "025720c37a0774b03c72c5c2975de7a8f70cc8e89db4f599d993ceab210afa9c",
+    "background.js": "174d0eeec6e95b702458dba4bd3110fd5c12f7698b89ff816dddb74bfdfd4aa9",
+    "icons/128.png": "7eb7269875d29e4a6c8d3c09a4b5b917a06ef0babecae9f3388821cf6ce86170",
+    "icons/16.png": "555f38eaf7639bd6027e35b373c2d4a7d33684e1a1373a1c1731d4f239b06ed9",
+    "icons/48.png": "8dc64c04122aae073ee4accc7597056e4a96a17c0f4bea94dfa21085b748a1e2",
+    "manifest.json": "adc337cecef655aac5ce73d57fa86dcf2c6b7e12ad8fbb6a625e19b2aae5de6a",
+    "options.js": "0b908cbfa765d7b166d03803ae77eead6efa4c85e41ed157cd9d9ef839790e52",
+    "options/index.html": "6d1f0f555e88e8ced10dc5093a79ddd8b33b6efa6f1c543c66878a4b43c712f4",
+    "popup.js": "7f64182e99fcff21251e819b7a12f3127a2b7dd7793a8d29e83e7028de168ac1",
+    "popup/index.html": "d62810879186d516b4265f70b4a98ec717dc756063be2d5f5c98fe8da514e082",
+    "regex.js": "1b5ed609da0d5d42c9f3ca4838a48ff482d25da3ca27a525045219c912f399f6"
+  },
+  "cases": [
+    {
+      "case": "prompt-cancel",
+      "status": "pass",
+      "saveAsSetting": false,
+      "downloadId": 1,
+      "state": "interrupted",
+      "error": "USER_CANCELED",
+      "relativePath": null,
+      "sha256": null,
+      "originalPreserved": true,
+      "proposal": {
+        "basename": "conflict.txt",
+        "destination": "Native/Prompt",
+        "ruleId": "957a6062-c261-40fb-9664-0aed941c349d",
+        "timestamp": 1792070722150
+      },
+      "sourceRun": "phase5-native-2026-10-15T13-39-19-561Z/native-report.json"
+    },
+    {
+      "case": "prompt-choose",
+      "status": "pass",
+      "saveAsSetting": false,
+      "downloadId": 1,
+      "state": "complete",
+      "relativePath": "phase5-native-2026-10-15T13-29-39-688Z/Downloads/Native/Chosen/prompt-choice.txt",
+      "sha256": "0991b3af800a61ac880fc77e2c62db36ca4e1a5a96c389941bd67df864b7939d",
+      "originalPreserved": true,
+      "proposal": {
+        "basename": "conflict.txt",
+        "destination": "Native/Prompt",
+        "ruleId": "875185af-0067-44f8-9889-287d6c0222b8",
+        "timestamp": 1792071360877
+      },
+      "review": "Original strict-current-profile path assertion was incorrect: the user selected an older task fixture directory. Live file content, original preservation, Chrome complete history and unchanged build hashes were independently rechecked.",
+      "sourceRun": "phase5-native-2026-10-15T13-39-19-561Z/native-report.json"
+    },
+    {
+      "case": "save-as-choose",
+      "status": "pass",
+      "saveAsSetting": true,
+      "downloadId": 1,
+      "state": "complete",
+      "relativePath": "Native/Auto/user-choice.txt",
+      "sha256": "fffa73a44ff5a744ec801d6f60f854ed34f74824c466552835dc5ef7c6477e4a",
+      "originalPreserved": true,
+      "proposal": {
+        "basename": "native-save-as.txt",
+        "destination": "Native/Auto",
+        "ruleId": "c21527a6-d68c-4ed6-87e1-ee62a0b8bf59",
+        "timestamp": 1792071724487
+      }
+    },
+    {
+      "case": "save-as-cancel",
+      "status": "pass",
+      "saveAsSetting": true,
+      "downloadId": 2,
+      "state": "interrupted",
+      "error": "USER_CANCELED",
+      "relativePath": null,
+      "sha256": null,
+      "originalPreserved": true,
+      "proposal": {
+        "basename": "native-cancel.txt",
+        "destination": "Native/Auto",
+        "ruleId": "c21527a6-d68c-4ed6-87e1-ee62a0b8bf59",
+        "timestamp": 1792071805046
+      }
+    }
+  ],
+  "note": "Raw reports retained locally outside version control. The prompt-choose case used an older fixture directory; independent recheck and original preservation are retained in its review note."
+}

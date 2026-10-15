@@ -5,11 +5,46 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Download Router</title>
   </head>
-  <body>
+  <body class="popup-page">
     <main>
+      <p class="eyebrow">ĐỊNH TUYẾN TRONG DOWNLOADS</p>
       <h1>Download Router</h1>
-      <p>Phase 0 · Rule domain mẫu</p>
-      <button type="button" id="options">Mở cài đặt</button>
+      <button
+        type="button"
+        id="toggle"
+        role="switch"
+        aria-checked="false"
+        aria-describedby="config-status"
+        disabled
+      >
+        Bật định tuyến
+      </button>
+      <p id="config-status" role="status">Đang đọc cấu hình…</p>
+      <p id="rule-count">Đang đọc số rule…</p>
+      <p id="action-status" role="status"></p>
+      <p id="error" role="alert"></p>
+      <div class="actions">
+        <button type="button" id="options">Mở cài đặt</button>
+        <button type="button" id="reload">Đọc lại</button>
+      </div>
+      <section aria-labelledby="event-heading">
+        <h2 id="event-heading">Đề xuất gần nhất</h2>
+        <p id="event-status" role="status">Đang đọc sự kiện…</p>
+        <dl id="event-details" hidden>
+          <dt>Thời điểm</dt>
+          <dd id="event-time"></dd>
+          <dt>Rule ID</dt>
+          <dd id="event-rule"></dd>
+          <dt>Basename</dt>
+          <dd id="event-basename"></dd>
+          <dt>Thư mục đích</dt>
+          <dd id="event-destination"></dd>
+        </dl>
+        <p class="hint">
+          Đây là đề xuất định tuyến, chưa xác nhận tải hoàn tất. Chrome, Save As
+          hoặc extension khác có thể đổi tên và vị trí cuối.
+        </p>
+      </section>
     </main>
     <script type="module" src="./index.ts"></script>
   </body>
